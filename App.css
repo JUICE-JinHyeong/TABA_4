@@ -1,0 +1,168 @@
+
+.title {  /*Na*/
+  position: absolute;
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 900;  /* 텍스트 굵기 */
+  font-size: 100px;
+  color: #00C036;
+  left: 610px;
+  top: 60px;
+}
+
+.subtitle1 {  /*의 솔직*/
+  position: absolute;
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 600;  /* 텍스트 굵기 */
+  font-size: 40px;
+  color: #686363;
+  left: 754px;
+  top: 161px;
+}
+
+.subtitle2 {  /*RE*/
+  position: absolute;
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 900;  /* 텍스트 굵기 */
+  font-size: 100px;
+  color: #FFDA1A;
+  left: 685px;
+  top: 135px;
+}
+
+.subtitle3 {  /*view*/
+  position: absolute;
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 600;  /* 텍스트 굵기 */
+  font-size: 40px;
+  color: #686363;
+  left: 809px;
+  top: 249px;
+}
+
+.search-input {
+  box-sizing: border-box;
+  position: absolute;
+  width: 807px;
+  height: 66px;
+  left: 341px;
+  top: 330px;
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  box-shadow: 3px 6px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 50px;
+  padding: 10px 115px 10px 180px;     /*여백*/
+  font-size: 18px;
+  box-sizing: border-box;
+}
+
+.search-button {         /*돋보기버튼*/
+  position: absolute;
+  left: 1164px;          /*위치*/
+  top: 347px;            /*위치*/
+  background: none; 
+  border: none;          /*테두리*/
+  padding: 0;
+  cursor: pointer;
+}
+
+.search-icon {          /*돋보기*/
+  width: 32px;          /*크기*/
+  height: 32px;         /*크기*/
+  opacity: 1;           /*투명도*/
+}
+
+
+.keyboard-button {     /*키보드버튼*/
+  position: absolute;
+  left: 1043px;        /*위치*/
+  top: 351px;          /*위치*/
+  background: none; 
+  border: none;        /*테두리*/
+  padding: 0;
+  cursor: pointer;
+}
+
+.keyboard-icon {       /*돋보기*/
+  width: 36px;         /*크기*/
+  height: 26.25px;     /*크기*/
+  opacity: 1;          /*투명도*/
+}
+
+.low-button {          /*▼버튼*/
+  position: absolute;
+  left: 1100px;        /*위치*/
+  top: 356px;          /*위치*/
+  background: none; 
+  border: none;        /*테두리*/
+  padding: 0;
+  cursor: pointer;
+}
+
+.iow-icon {            /*▼*/
+  opacity: 1;          /*투명도*/
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: inline-flex;
+}
+ 
+.search-input-button {     /*앞▼버튼*/
+  position: absolute;
+  left: 483px;
+  top: 354px;
+  background: none; 
+  border: none;            /*테두리*/
+  padding: 0;
+  cursor: pointer;
+}
+
+.low-icon_2 {
+  opacity: 1;             /*투명도*/
+}
+
+.list {
+  display: none;          /* 초기에 숨김 */
+  position: absolute;     /*위치를 절대적 설정*/
+  left: 350px;
+  top: 405px; 
+  list-style-type: none;  /*항목앞에 점 제거*/
+  background-color: #FFFFFF;  /*배경색*/
+  border: 1px solid #606060;  /*테두리 너비,색*/
+  border-radius: 25px;
+  padding: 7px 13px 7px 13px; /*여백*/
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-size: 17px;
+  line-height: 40px;    /*행간격*/
+}
+
+.list.show {
+  display: block; /* 클릭 시 보이기 */
+}
+
+input[type="checkbox"] {     /*체크박스*/
+  width: 13px;               /*가로*/
+  height: 13px;              /*세로*/
+  margin-right: 7px; /* 체크박스와 항목 사이 간격 조정 */
+}
+
+.selected-option {        /*체크박스 선택시 상태출력창*/
+  position: absolute;
+  left: 380
+  px; /* 원하는 위치로 조정해주세요 */
+  top: 348px; /* 원하는 위치로 조정해주세요 */
+  color: #000000; /* 텍스트 색상 */
+  font-size: 23px; /* 텍스트 크기 */
+  /* 추가적인 스타일링을 원하는 대로 적용해주세요 */
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 500;
+  white-space: nowrap;   /*텍스트 가로정렬*/
+  display: ${showList ? 'block' : 'none'};
+}
