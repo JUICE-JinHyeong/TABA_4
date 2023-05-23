@@ -1,0 +1,20 @@
+YeINN > Mmpzx jQTnr 확인 > ngGKH
+
+df = pd.DataFrame(columns = ['review' , 'image_url'])
+
+try :
+	check_image = driver.find_elements(by = By.CLASS_NAME , value = 'ngGKH')
+	if is not None check_image :
+		# 이미지 url 가져오기
+
+		rest_img = driver.find_elements(by = By.CLASS_NAME , value ='fNygA > a > div')
+		rest_img_urls = []
+		for stylejs in rest_img :
+    
+    		url_test_data = stylejs.get_attribute('style')
+    		url_find_num = url_test_data.find('url("')
+    		url_find_num_end = url_test_data.find('jpg')
+    		rest_img_url = url_test_data[url_find_num + 5 : url_find_num_end+3]
+    		rest_img_urls.append(rest_img_url)
+
+review = driver.find_elements(by = By.CLASS_NAME , value = 'zPfVt')
