@@ -6,5 +6,6 @@ webdriver_manager: 3.8.6
 pandas: 1.4.4
 numpy : 1.23.5
 tqdm: 4.64.1
+konlpy : 0.6.0
 
 주소, 찾아가는길 , 영업시간 , 064 , 050 , 편의 , 설명
