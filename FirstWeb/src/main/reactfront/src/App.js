@@ -5,7 +5,7 @@ import searchImage from './images/search.png';
 import keyboardImage from './images/keyboard_icon.png'; 
 import lowImage from './images/▼.png';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import SearchPage from './SearchPage';
+import SearchPage from './pages/SearchPage';
 import Checkbox from './Component/Checkbox'; // Checkbox component
 
 function Main() {
@@ -36,11 +36,11 @@ function Main() {
               <img src={keyboardImage} alt="keyboard" className="keyboard-icon" />
             </button> 
             <button className="low-button">
-              <img src={lowImage} alt="low" className="low-icon" />
+              <img src={lowImage} alt="low" className="low-icon" /> 
             </button>
             <button className="search-button" onClick={() => {setShowSearchPage(true);}}>
-              <img src={searchImage} alt="Search" className="search-icon" />
-            </button>
+              <img src={searchImage} alt="Search" className="search-icon" /> 
+            </button> {/*검색 버튼*/}
             {selectedOption && !showList && (
               <div className="selected-option">{selectedOption}</div>
             )}
@@ -53,7 +53,7 @@ function Main() {
                 option={option}
                 selectedOption={selectedOption}
                 onChange={handleCheckboxChange}
-              />
+              /> /* 체크박스 컴포넌트로 체크박스 구현 */
             ))}
           </ul>
           {showList && <div className="selected-option">{selectedOption}</div>}
