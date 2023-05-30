@@ -1,79 +1,52 @@
-import axios from 'axios';
-import './App.css';
-import React, { useState, useEffect }  from 'react';
-import searchImage from './images/search.png';
-import keyboardImage from './images/keyboard_icon.png'; 
-import lowImage from './images/▼.png';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import SearchPage from './pages/SearchPage';
-import Checkbox from './Component/Checkbox'; // Checkbox component
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import SearchBar from './Component/SearchBar';
+import MiddlePage from './pages/middlePage';
+import ResultPage from './pages/resultPage';
 
-function Main() {
-  const [showList, setShowList] = useState(false); 
-  const [selectedOption, setSelectedOption] = useState('');
-  const handleClick = () => { setShowList(!showList);};
-  const handleCheckboxChange = (event) => {setSelectedOption(event.target.value);};
-  useEffect(() => {setSelectedOption('식당 검색'); }, []); 
+export default function App() {
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }));
 
-  const [showSearchPage, setShowSearchPage] = useState(false); 
-  const searchOptions = ['식당 검색', '음식 검색', '지역 검색']; // Options for search
-  
-  return (
-    <main className="container">
-      {!showSearchPage && (
-        <>
-          <h1 className="title">Na</h1>
-          <h2 className="subtitle1">의 솔직</h2>
-          <h2 className="subtitle2">RE</h2>
-          <h2 className="subtitle3">view</h2>
-
-          <div className="search-input-wrapper"> 
-            <input type="text" className="search-input" placeholder="음식점 이름 또는 메뉴명 입력" />
-            <button className="search-input-button" onClick={handleClick}>
-              <img src={lowImage} alt="low" className="low-icon_2" />
-            </button> 
-            <button className="keyboard-button">
-              <img src={keyboardImage} alt="keyboard" className="keyboard-icon" />
-            </button> 
-            <button className="low-button">
-              <img src={lowImage} alt="low" className="low-icon" /> 
-            </button>
-            <button className="search-button" onClick={() => {setShowSearchPage(true);}}>
-              <img src={searchImage} alt="Search" className="search-icon" /> 
-            </button> {/*검색 버튼*/}
-            {selectedOption && !showList && (
-              <div className="selected-option">{selectedOption}</div>
-            )}
-          </div> 
-
-          <ul className={`list ${showList ? 'show' : ''}`}>
-            {searchOptions.map(option => (
-              <Checkbox 
-                key={option}
-                option={option}
-                selectedOption={selectedOption}
-                onChange={handleCheckboxChange}
-              /> /* 체크박스 컴포넌트로 체크박스 구현 */
-            ))}
-          </ul>
-          {showList && <div className="selected-option">{selectedOption}</div>}
-        </>
-      )}
-
-      {showSearchPage && <SearchPage />}
-    </main>
+  const HomePage = () => (
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={3}>
+        <Grid item xs={2} />
+        <Grid item xs={8}
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          style={{ minHeight: '70vh' }}
+        >
+          <Grid item>
+            <h1>나리뷰</h1>
+          </Grid>
+          <Grid item>
+            <SearchBar />
+          </Grid>
+        </Grid>
+        <Grid item xs={2} />
+      </Grid>
+    </Box>
   );
-}
 
-function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/searchPage" element={<SearchPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/middlePage" element={<MiddlePage />} />
+        <Route path="/result" element={<ResultPage />} />
       </Routes>
     </Router>
   );
 }
-
-export default App;
