@@ -1,4 +1,4 @@
-###
+###DB메인 서버 연결
 C:\TmaxData\tibero6\client\config\tbdsn.tbr 에서
 TABA=(
     (INSTANCE=(HOST=112.168.80.6)
@@ -15,3 +15,4 @@ create user hyemin identified by nare;
 grant dba to hyemin;
 
 connect hyemin/nare;
+
