@@ -1,0 +1,17 @@
+###
+C:\TmaxData\tibero6\client\config\tbdsn.tbr 에서
+TABA=(
+    (INSTANCE=(HOST=112.168.80.6)
+              (PORT=8629)
+              (DB_NAME=tibero)
+    )
+)
+추가 ###
+
+tbsql sys/tibero@TABA
+
+create user hyemin identified by nare;
+
+grant dba to hyemin;
+
+connect hyemin/nare;
