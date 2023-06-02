@@ -1,48 +1,91 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Grid, Box, Paper } from '@mui/material';
 import SearchBar from '../Component/SearchBar';
-import Card from '../Component/Card';
+import CardComponent from '../Component/Card';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Pagination from '@mui/material/Pagination';
+import { styled } from '@mui/material/styles';
+import { searchFromDB } from '../api/SearchFromDB'; // or wherever you put the file
+import queryString from 'query-string'; // Query-string 패키지를 이용해서 URL에서 파라미터를 추출합니다.
+
+
+const PaginationContainer = styled('div')({ // 페이지네이션 기능
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '30px',
+});
 
 export default function MiddlePage() {
+    const [cardsData, setCardsData] = useState([]);
+    //
+    const cardsPerPage = 6;
+    const [currentPage, setCurrentPage] = useState(1);
+    const handlePageChange = (event, page) => {
+        setCurrentPage(page);
+    };
+    //
     const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const searchOption = queryParams.get('searchOption');
-    const searchInput = queryParams.get('searchInput');
+    const { searchOption, searchInput } = queryString.parse(location.search);
     const navigate = useNavigate();
-    const handleLogoClick = () => {
+    const handleLogoClick = () => { // 로고 클릭시 홈페이지로 이동
         navigate('/');
     };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await searchFromDB(searchOption, searchInput);
+                setCardsData(data || []);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData();
+    }, [searchOption, searchInput]);
+
+    const totalCards = cardsData.length;
+
+    const renderCards = () => {
+        if (!cardsData || cardsData.length === 0) {
+            return null; // 데이터가 아직 불러와지지 않았을 때 렌더링하지 않음
+        }
+
+        const startIndex = (currentPage - 1) * cardsPerPage;
+        const endIndex = startIndex + cardsPerPage;
+        const cardsToRender = cardsData.slice(startIndex, endIndex);
+
+        return cardsToRender.map((cardData, index) => (
+            <Grid item xs={4} key={index}>
+                <CardComponent data={cardData} />
+            </Grid>
+        ));
+    };
 
     return (
-        <Container style={{ height: "100vh" }}>
+        <Container style={{ height: "125vh" }}>
             <Grid container spacing={2}>
-                <Grid item xs="2"> {/* 왼쪽 로고란 */}
+                <Grid item xs={2}>
                     <Box display="flex" alignItems="center" height="100%">
                         <h1 onClick={handleLogoClick}>나리뷰</h1>
                     </Box>
                 </Grid>
-                <Grid item xs="10"> {/* 검색창 */}
+                <Grid item xs={10}>
                     <Box display="flex" alignItems="center" height="100%">
                         <SearchBar />
                     </Box>
                 </Grid>
-                <Grid container spacing={3}>
-                    {[1, 2, 3, 4, 5, 6].map((item) => (
-                        <Grid item xs={4} key={item}>
-                            <Card />
-                        </Grid>
-                    ))}
+                <Grid container spacing={2}>
+                    {renderCards()}
                 </Grid>
-
             </Grid>
-
+            <PaginationContainer>
+                <Pagination count={Math.ceil(totalCards / cardsPerPage)} page={currentPage} onChange={handlePageChange} color="primary" />
+            </PaginationContainer>
         </Container>
-
     );
-
 }
+
 /*Card의 객체화 관련 주석
 지금 저 카드에 담긴 내용은 똑같잖아, 근데 내 계획은 SearchBar컴포넌트에서 select와 텍스트를 입력받아 DB에서 해당 관련된 내용을 저런 카드 형식으로 보여주는 거야 그러러면 어떻게 해야해?
 DB에서 데이터를 가져와서 각각의 카드에 다른 내용을 보여주려면 주로 다음과 같은 단계를 따릅니다:
