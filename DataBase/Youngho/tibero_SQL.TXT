@@ -1,0 +1,100 @@
+### DB메인 서버 연결
+C:\TmaxData\tibero6\client\config\tbdsn.tbr 에서
+TABA=(
+    (INSTANCE=(HOST=112.168.80.6)
+              (PORT=8629)
+              (DB_NAME=tibero)
+    )
+)
+추가###
+
+
+-----------------------------------------------------
+#유저 생성(ServiceDB)
+tbsql sys/tibero@TABA
+
+create user youngho identified by nare;
+
+grant dba to youngho;
+
+connect youngho/nare;
+------------------------------------------------------
+#식당 정보(rest_info) table 생성
+
+CREATE TABLE YOUNGHO.REST_INFO (
+	REST_ID NUMBER,
+	REST_NAME VARCHAR(100),
+	KIND VARCHAR(100),
+	BOSS_ADDRESS VARCHAR(100),
+	ROAD VARCHAR(1000),
+	OPEN_HOUR VARCHAR(5000),
+	FREE VARCHAR(1000),
+	EXPLAIN VARCHAR(2000),
+	NUM VARCHAR(500),
+	HOMEPAGE VARCHAR(100),
+	ETC VARCHAR(500),
+	IMAGE VARCHAR(2000),
+	MENU VARCHAR(10000),
+	BIG_TYPE VARCHAR(100),
+	OPEN VARCHAR(100),
+	STATUS VARCHAR(100),
+	ROAD_STATUS VARCHAR(100),
+	POST_STATUS VARCHAR(100),
+	SD VARCHAR(100),
+	SD_SGG VARCHAR(100),
+	SGG VARCHAR(100),
+	SD_SGG_EMD VARCHAR(100),
+	EMD VARCHAR(100),
+	SDCODE VARCHAR(100),
+	SGG_CODE VARCHAR(100),
+	EMD_CODE VARCHAR(100)
+)
+TABLESPACE USR
+PCTFREE 10
+INITRANS 2
+STORAGE (
+	MAXEXTENTS UNLIMITED
+)
+LOGGING
+NOPARALLEL;
+-------------------------------------------------------
+#긍부정리뷰(review_collect) table 생성
+
+CREATE TABLE YOUNGHO.REVIEW_COLLECT (
+	REVIEW VARCHAR(5000 CHAR),
+	RE_IM_URL VARCHAR(9000 CHAR),
+	PROFILE VARCHAR(600 CHAR),
+	MY_PLACE VARCHAR(100 CHAR),
+	WRITER VARCHAR(30 CHAR),
+	WRITE_COUNT VARCHAR(40 CHAR),
+	WRITE_DAY VARCHAR(20 CHAR),
+	VISIT_COUNT VARCHAR(10 CHAR),
+	PAY_METHOD VARCHAR(5 CHAR),
+	REST_ID NUMBER,
+	REST_NAME VARCHAR(50 CHAR),
+	LABEL NUMBER,
+	LABEL_TF VARCHAR(2 CHAR)
+)
+TABLESPACE USR
+PCTFREE 10
+INITRANS 2
+STORAGE (
+	MAXEXTENTS UNLIMITED
+)
+LOGGING
+NOPARALLEL;
+-------------------------------------------------
+#긍정인 리뷰(label=0)는 label_tf column에 "T"로 저장,
+부정과 중립 리뷰(label=1,2)는 "F"로 저장
+
+UPDATE review_collect
+SET label_tf = 'T'
+WHERE label = 0;
+
+UPDATE review_collect
+SET label_tf = 'F'
+WHERE label = 1;
+
+UPDATE review_collect
+SET label_tf = 'F'
+WHERE label = 2;
