@@ -33,8 +33,8 @@ export default function Carddata({data}) {
     const navigate = useNavigate();
     console.log(data.imageURL)
     const handleCardClick = () => {
-        navigate(`/result`);
-    };
+        navigate(`/result?id=${data.id}`);
+      };
     return (
 
         <Card sx={{ maxWidth: 345 }}>

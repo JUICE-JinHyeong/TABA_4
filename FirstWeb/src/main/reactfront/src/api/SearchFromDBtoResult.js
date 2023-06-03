@@ -1,9 +1,10 @@
-// src/api.js
+// Card 컴포넌트의 내용에 대해 심화 검색
+
 import axios from 'axios';
-const transformDataForCardComponent = (data) => {
+const transformData = (data) => {
     const imageUrlsString = data.IMAGE.slice(1, -1); // Remove the square brackets
     const imageUrls = imageUrlsString.split(', ');
-    const firstImageUrl = imageUrls[0];
+    const firstImageUrl = [imageUrls[0],imageUrls[1],imageUrls[2],imageUrls[3]];
     console.log(firstImageUrl);
     return {
         

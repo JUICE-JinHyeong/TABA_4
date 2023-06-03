@@ -5,7 +5,7 @@ import { styled, makeStyles } from '@mui/material/styles';
 import SearchBar from '../Component/SearchBar';
 import Image from '../Component/Image';
 import Table from '../Component/Table';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 
 
 
@@ -21,16 +21,23 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 export default function ResultPage() {
+  const location = useLocation();
+  const data= location.state?.data;
+
   const navigate = useNavigate();
   const handleLogoClick = () => {
     navigate('/');
   };
+  if (!data) {
+    return <div>Loading...</div>; // 또는 다른 대체 화면을 표시합니다.
+  }
   return (
     <Container style={{ height: "100vh" }}>
       <Grid container spacing={2}>
         <Grid item xs="2"> {/* 왼쪽 로고란 */}
           <Box display="flex" alignItems="center" height="100%">
             <h1 onClick={handleLogoClick}>나리뷰</h1>
+            <p>Title: {data.title}</p> {/* 여기서 title 데이터를 사용합니다 */}
           </Box>
         </Grid>
         <Grid item xs="10"> {/* 검색창 */}
