@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Select, MenuItem, TextField, InputLabel, FormControl, Box, IconButton, Alert, Modal } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from "react-router-dom";
-
+import axios from 'axios';
 
 const SearchBar = () => {
     const navigate = useNavigate();
@@ -26,6 +26,15 @@ const SearchBar = () => {
             if (showAlert) {
                 setShowAlert(false);
             }
+            
+            axios.post('http://localhost:8080/input', {
+                searchInput: searchInput,
+                date: new Date()
+                // count는 서버측에서 관리합니다.
+            })
+            .then(response => console.log(response))
+            .catch(error => console.error(error));
+
             navigate(`/middlePage?searchOption=${selectedOption}&searchInput=${searchInput}`);
             
         } else {
