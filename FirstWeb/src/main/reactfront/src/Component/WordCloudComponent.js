@@ -1,4 +1,5 @@
 import React from "react";
+import { Box } from "@mui/material";
 import { TagCloud } from "react-tagcloud";
 
 const data = [
@@ -12,13 +13,13 @@ const data = [
 ];
 
 const SimpleCloud = () => (
-  <div style={{ width: "100%", height: "100px" }}>
+  <Box width="100%" height="100px">
     <TagCloud
       minSize={12}
       maxSize={35}
       tags={data}
     />
-  </div>
+  </Box>
 );
 
 export default SimpleCloud;

@@ -22,34 +22,31 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function ResultPage() {
   const location = useLocation();
-  const data= location.state?.data;
-
+  const data = location.state?.data; 
   const navigate = useNavigate();
   const handleLogoClick = () => {
     navigate('/');
   };
-  if (!data) {
-    return <div>Loading...</div>; // 또는 다른 대체 화면을 표시합니다.
-  }
+  
   return (
-    <Container style={{ height: "100vh" }}>
+    <Container style={{ height: "125vh" }}>
       <Grid container spacing={2}>
-        <Grid item xs="2"> {/* 왼쪽 로고란 */}
+        <Grid item xs={2}> {/* 왼쪽 로고란 */}
           <Box display="flex" alignItems="center" height="100%">
             <h1 onClick={handleLogoClick}>나리뷰</h1>
-            <p>Title: {data.title}</p> {/* 여기서 title 데이터를 사용합니다 */}
           </Box>
         </Grid>
-        <Grid item xs="10"> {/* 검색창 */}
+        <Grid item xs={10}> {/* 검색창 */}
           <Box display="flex" alignItems="center" height="100%">
             <SearchBar />
           </Box>
         </Grid>
-        <Grid item xs="4"> {/* 왼쪽 검색결과란 */}
-          <Image />
-          <Table></Table>
+        <Grid item xs={4} sx={{overflowX: 'auto'}}> 
+          <h1>{data.title}</h1>
+          <Image data={data} />
+          <Table data={data}/>
         </Grid>
-        <Grid item xs="8"> {/* 오른쪽 워드 클라우드 란 */}
+        <Grid item xs={8}> {/* 오른쪽 워드 클라우드 란 */}
           <Item>
             <TabPanel />
           </Item>

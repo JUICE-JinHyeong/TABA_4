@@ -3,8 +3,10 @@ import axios from 'axios';
 const transformDataForCardComponent = (data) => {
     const imageUrlsString = data.IMAGE.slice(1, -1); // Remove the square brackets
     const imageUrls = imageUrlsString.split(', ');
-    const firstImageUrl = imageUrls[0];
-    console.log(firstImageUrl);
+    // const firstImageUrl = imageUrls[0];
+    // console.log(firstImageUrl);
+    console.log(imageUrls);
+
     return {
         
         title: data.REST_NAME,
@@ -12,7 +14,7 @@ const transformDataForCardComponent = (data) => {
         address: data.BOSS_ADDRESS,
         opentime: data.OPEN_HOUR,
         pn: data.NUM,
-        imageURL: firstImageUrl,
+        imageURL: imageUrls,
         id: data.REST_ID,
     };
 };

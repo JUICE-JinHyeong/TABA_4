@@ -16,7 +16,7 @@ public class middleSearchController {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @CrossOrigin
-    @GetMapping("/search")
+    @GetMapping("/search") // 
     public List<Map<String, Object>> search(
             @RequestParam("searchOption") String searchOption,
             @RequestParam("searchInput") String searchInput

@@ -11,7 +11,7 @@ import ResultPage from './pages/resultPage';
 export default function App() {
  
   const HomePage = () => (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box item sx={{ flexGrow: 1 }}>
       <Grid container spacing={3}>
         <Grid item xs={2} />
         <Grid item xs={8}

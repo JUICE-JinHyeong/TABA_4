@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Grid, Box, Paper } from '@mui/material';
+import { Container, Grid, Box, CircularProgress } from '@mui/material';
 import SearchBar from '../Component/SearchBar';
 import CardComponent from '../Component/Card';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -62,6 +62,29 @@ export default function MiddlePage() {
         ));
     };
 
+    useEffect(() => {
+        // 비동기 작업 등으로 인한 로딩 시간을 시뮬레이션
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
+      }, []);
+      const [loading, setLoading] = useState(true);
+
+      // 로딩 중일 때 Skeleton 플레이스홀더를 보여줌
+      if (loading) {
+        return (
+            <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height="100vh"
+          >
+            <CircularProgress size={80} />
+          </Box>
+        );
+        
+      }
+
     return (
         <Container style={{ height: "125vh" }}>
             <Grid container spacing={2}>
@@ -75,7 +98,7 @@ export default function MiddlePage() {
                         <SearchBar />
                     </Box>
                 </Grid>
-                <Grid container spacing={2}>
+                <Grid item xs ={12} container spacing={2}>
                     {renderCards()}
                 </Grid>
             </Grid>

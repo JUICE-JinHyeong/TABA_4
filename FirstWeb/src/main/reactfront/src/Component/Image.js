@@ -1,40 +1,26 @@
-import * as React from 'react';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
+import React from 'react';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { Box } from '@mui/material';
 
-export default function StandardImageList() {
+
+export default function CustomImageList({ data }) {
+  if (!data || !data.imageURL) {
+    return null;
+  }
+
+  const imageURL = data.imageURL;
+
   return (
-    <ImageList sx={{ width: '100%', height: '100%' }} cols={2} rowHeight={30} gap={10}>
-      {itemData.map((item) => (
-        <ImageListItem key={item.img}>
-          <img
-            src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-            srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-            alt={item.title}
-            loading="lazy"
-          />
-        </ImageListItem>
-      ))}
-    </ImageList>
+    <Carousel>
+      {imageURL.map((img, index) => {
+        const imageUrl = img.replace(/'/g, ""); // 작은 따옴표를 제거합니다.
+        return (
+          <Box key={index} component="div">
+            <img src={imageUrl} alt={`Image ${index}`} />
+          </Box>
+        );
+      })}
+    </Carousel>
   );
-}
-
-const itemData = [
-  {
-    img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    title: 'Breakfast',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    title: 'Burger',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-    title: 'Coffee',
-  },
-  
-];
+    }
