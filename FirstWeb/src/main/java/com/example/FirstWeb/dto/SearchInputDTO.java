@@ -12,4 +12,3 @@ public class SearchInputDTO {
         this.searchInput = searchInput;
     }
 }
-
