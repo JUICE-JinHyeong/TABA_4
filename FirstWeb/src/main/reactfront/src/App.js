@@ -7,8 +7,10 @@ import Grid from '@mui/material/Grid';
 import SearchBar from './Component/SearchBar';
 import MiddlePage from './pages/middlePage';
 import ResultPage from './pages/resultPage';
+import RecentSearches from './Component/RecentSearches';
 
 export default function App() {
+  
  
   const HomePage = () => (
     <Box item sx={{ flexGrow: 1 }}>
@@ -27,6 +29,10 @@ export default function App() {
           <Grid item>
             <SearchBar />
           </Grid>
+          <Grid item>
+          <RecentSearches /> {/* 추가: 최근 검색 결과 표시 */}
+          </Grid>
+          
         </Grid>
         <Grid item xs={2} />
       </Grid>

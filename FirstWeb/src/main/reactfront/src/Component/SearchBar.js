@@ -21,26 +21,28 @@ const SearchBar = () => {
     };
 
 
-    const handleSearch = () => { // 검색 버튼을 누를경우
-        if (selectedOption && searchInput) {
-            if (showAlert) {
-                setShowAlert(false);
-            }
-            
-            axios.post('http://localhost:8080/input', {
-                searchInput: searchInput,
-                date: new Date()
-                // count는 서버측에서 관리합니다.
-            })
-            .then(response => console.log(response))
-            .catch(error => console.error(error));
-
-            navigate(`/middlePage?searchOption=${selectedOption}&searchInput=${searchInput}`);
-            
-        } else {
-            setShowAlert(true);
-        }
-    };
+    const handleSearch = () => {
+      if (selectedOption && searchInput) {
+          if (showAlert) {
+              setShowAlert(false);
+          }
+  
+          const searchCount = {
+              searchInput: searchInput,
+              count: null, // 서버에서 관리됨
+              date: new Date().toISOString() // ISO 8601 형식으로 변환
+          };
+          navigate(`/middlePage?searchOption=${selectedOption}&searchInput=${searchInput}`);
+          axios.post('http://localhost:8080/api/input', searchCount)
+              .then(response => {
+                  console.log(response);
+              })
+              .catch(error => console.error(error));
+      } else {
+          setShowAlert(true);
+      }
+  };
+  
 
     return (
         <Box display="flex" alignItems="center" gap={2}>

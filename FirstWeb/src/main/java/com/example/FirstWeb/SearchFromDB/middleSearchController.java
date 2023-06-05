@@ -74,9 +74,9 @@ public class middleSearchController {
         //유사도 혹은 긍정리뷰수에 따른 상위50개 행 추출
 
         // 검색 결과를 터미널에 출력
-        for (Map<String, Object> row : result) {
-            System.out.println(row+"\n");
-        }
+//        for (Map<String, Object> row : result) {
+//            System.out.println(row+"\n");
+//        }
 
         return result;
     }

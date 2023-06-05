@@ -18,7 +18,7 @@ const transformData = (data) => {
     };
 };
 
-export const searchFromDB = async (searchOption, searchInput) => {
+export const searchFromDB = async (data) => {
     try {
         if (!searchOption || !searchInput) {
             return []; // searchOption 또는 searchInput이 없는 경우 빈 배열 반환
