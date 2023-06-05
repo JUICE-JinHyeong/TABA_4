@@ -15,7 +15,7 @@ MODIFY ( column_name 변경할 속성 내용들, column_name 변경할 속성 �
 ALTER TABLE table_name RENAME COLUMN column_name TO re_column_name;
 	=> 제약조건 자동으로 이동 됨, 단 CHECK제약 조건의 경우 오류 발생 가능. 사용자가 ALTER TABLE문을 이용하여 제약조건 재정의 필요
 
-##행 삭제하기##
+##열 삭제하기##
 ALTER TABLE table_name
 DROP COLUMN column_name;
 
@@ -53,6 +53,21 @@ DBA_TBL_COLUMNS  :	Tibero 내의 모든 테이블과 뷰에 속한 컬럼의 정
 USER_TBL_COLUMNS :	현재 사용자에 속한 테이블 및 뷰에 속한 컬럼의 정보를 조회하는 뷰이다.
 ALL_TBL_COLUMNS   :	현재 사용자가 접근 가능한 테이블 및 뷰에 속한 컬럼의 정보를 조회하는 뷰이다.
 
+-----------------1-5. 테이블 페이스 생성하기 CREATE TABLESPACE---------------------
+
+CREATE TABLESPACE tablespace_name 
+DATAFILE 'path_to_datafile/datafile_name.dbf' SIZE 100M AUTOEXTEND ON NEXT 10M MAXSIZE UNLIMITED;
+
+#'path_to_datafile/datafile_name.dbf' : 테이블스페이스에 할당할 데이터 파일의 경로와 이름. 실제 시스템에 맞게 변경하기
+# 100M : 원하는 데이터 파일의 초기 크기 넣기 
+# AUTOEXTEND ON 데이터 파일이 가득차면 자동 확장되도록 설정
+# AUTOEXTEND ON NEXT 10M MAXSIZE UNLIMITED : 10M씩 자동으로 확장, 데이터 파일의 최대 크기는 제한하지 않음
+
+-----------------1-5. 테이블 페이스 변경하기 ALTER TABLE MOVE TABLESAPCE---------------------
+
+ALTER TABLE your_table_name MOVE TABLESPACE new_tablespace_name;
+
+
 -----------------2. 제약조건	CONSTRAINT ---------------------
 
 제약조건			설명
@@ -71,7 +86,7 @@ ALTER TABLE table_name
 RENAME CONSTRAINT 제약조건별칭 TO 제약조건의_새로운_별칭;
 
 
------------------2-2. 제약조건 변경 RENAME CONSTRAINT---------------------
+-----------------2-2. 제약조건 변경 ADD CONSTRAINT---------------------
 
 ALTER TABLE table_name
 ADD CONSTRAINT 제약조건별칭 CEHCK (예시 SALARY >= 50000);
