@@ -27,13 +27,9 @@ const SearchBar = () => {
               setShowAlert(false);
           }
   
-          const searchCount = {
-              searchInput: searchInput,
-              count: null, // 서버에서 관리됨
-              date: new Date().toISOString() // ISO 8601 형식으로 변환
-          };
+        
           navigate(`/middlePage?searchOption=${selectedOption}&searchInput=${searchInput}`);
-          axios.post('http://localhost:8080/api/input', searchCount)
+          axios.post('http://localhost:8080/api/input', searchInput)
               .then(response => {
                   console.log(response);
               })
