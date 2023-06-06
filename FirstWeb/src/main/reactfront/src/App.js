@@ -30,9 +30,8 @@ export default function App() {
             <SearchBar />
           </Grid>
           <Grid item>
-          <RecentSearches /> {/* 추가: 최근 검색 결과 표시 */}
           </Grid>
-          
+        
         </Grid>
         <Grid item xs={2} />
       </Grid>
