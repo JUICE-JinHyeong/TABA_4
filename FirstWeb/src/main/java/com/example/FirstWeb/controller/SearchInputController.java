@@ -7,6 +7,7 @@ import com.example.FirstWeb.service.SearchInputService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "*") // CORS 설정
 @RestController
 @RequestMapping("/api/input")
 public class SearchInputController {

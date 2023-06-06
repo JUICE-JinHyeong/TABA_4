@@ -29,8 +29,8 @@ const SearchBar = () => {
   
         
           navigate(`/middlePage?searchOption=${selectedOption}&searchInput=${searchInput}`);
-          axios.post('http://localhost:8080/api/input', searchInput)
-              .then(response => {
+          axios.post('/api/input', { searchInput }, { headers: { 'Content-Type': 'application/json' }})
+          .then(response => {
                   console.log(response);
               })
               .catch(error => console.error(error));
