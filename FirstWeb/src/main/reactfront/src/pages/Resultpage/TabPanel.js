@@ -50,7 +50,7 @@ export default function BasicTabs() {
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="긍정" {...a11yProps(0)} />
+                    <Tab label="워드 클라우드" {...a11yProps(0)} />
                     <Tab label="부정" {...a11yProps(1)} />
                     <Tab label="Item Three" {...a11yProps(2)} />
                 </Tabs>

@@ -4,10 +4,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import SearchBar from './Component/SearchBar';
-import MiddlePage from './pages/middlePage';
-import ResultPage from './pages/resultPage';
-import RecentSearches from './Component/RecentSearches';
+import SearchBar from '../SearchBar';
+import MiddlePage from '../Middlepage/MIDDLE';
+import ResultPage from '../Resultpage/RESULT';
+import RecentSearches from '../../api/SEARCH_INPUT';
 
 export default function App() {
   

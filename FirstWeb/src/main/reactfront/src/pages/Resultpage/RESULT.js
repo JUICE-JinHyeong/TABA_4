@@ -1,10 +1,10 @@
-import TabPanel from '../Component/TabPanel';
+import TabPanel from './TabPanel';
 import { Container, Grid, Box, Paper } from '@mui/material';
 import * as React from 'react';
 import { styled, makeStyles } from '@mui/material/styles';
-import SearchBar from '../Component/SearchBar';
-import Image from '../Component/Image';
-import Table from '../Component/Table';
+import SearchBar from '../SearchBar';
+import Image from '../Middlepage/Image';
+import Table from '../Middlepage/Table';
 import { useNavigate,useLocation } from 'react-router-dom';
 
 
@@ -22,7 +22,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function ResultPage() {
   const location = useLocation();
-  const data = location.state?.data; 
+  const data = location.state?.data; //Card 클릭시 REST_INFO 테이블의 data가 전달된다.
   const navigate = useNavigate();
   const handleLogoClick = () => {
     navigate('/');
