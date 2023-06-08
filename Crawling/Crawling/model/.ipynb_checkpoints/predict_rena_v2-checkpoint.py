@@ -16,13 +16,9 @@ class psng_predict_all_v2:
     def __init__(self, df):
         self.df = df
         path = ''
-        self.loaded_model = load_model(f'{path}posneg_no_oneword.h5')
+        self.loaded_model = load_model(f'{path}posneg_no_oneword_v3.h5')
         train_data = pd.read_csv(f'{path}train_data_main_v2.csv', encoding='euc-kr')
-        test_data = pd.read_csv(f'{path}test_data_main_v2.csv', encoding='euc-kr')
         X_train = train_data['tokenized'].apply(eval).values
-        self.X_test = test_data['tokenized'].apply(eval).values
-        self.y_test = np.array(test_data['label'].values)
-        self.X_test_tkd = None
         vocab_size = 20894 # change
         self.tokenizer = Tokenizer(vocab_size, oov_token='OOV')
         self.tokenizer.fit_on_texts(X_train)
@@ -31,9 +27,9 @@ class psng_predict_all_v2:
     def preprocessing(self):
         okt = Okt()
         R_frm = self.df.copy()
-        R_frm['리뷰'] = R_frm['리뷰'].str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]", "", regex=True)
-        R_frm['리뷰'].replace('', np.nan, inplace=True)
-        R_frm['리뷰'] = R_frm['리뷰'].astype(str)
+        R_frm['REVIEW'] = R_frm['REVIEW'].str.replace("[^ㄱ-ㅎㅏ-ㅣ가-힣 ]", "", regex=True)
+        R_frm['REVIEW'].replace('', np.nan, inplace=True)
+        R_frm['REVIEW'] = R_frm['REVIEW'].astype(str)
         stopwords = ['도', '는', '다', '의', '가', '이', '은',
                      '한', '에', '하', '고', '을', '를', '인', '듯',
                      '과', '와', '네', '들', '듯', '지', '임', '게',
@@ -47,22 +43,11 @@ class psng_predict_all_v2:
 
         okt = Okt()
         # R_frm['tokenized'] = R_frm['리뷰'].apply(okt.pos)
-        R_frm['tokenized'] = R_frm['리뷰'].apply(lambda x: okt.pos(x, norm=True, stem=True))
+        R_frm['tokenized'] = R_frm['REVIEW'].apply(lambda x: okt.pos(x, norm=True, stem=True))
         R_frm['tokenized'] = R_frm['tokenized'].apply(
             lambda x: [word for word, shape in x if shape in ['Verb', 'Adjective', 'Noun', 'VerbPrefix'] if word not in stopwords])
         R_pred = R_frm['tokenized'].values
         return R_pred
-
-    def model_test(self):
-        tokenizer = self.tokenizer
-        X_test = tokenizer.texts_to_sequences(self.X_test)
-        y_test = self.y_test
-        X_test = pad_sequences(X_test, maxlen=self.max_len)
-        print("\n 테스트 정확도: %.4f" % (self.loaded_model.evaluate(X_test, y_test)[1]))
-
-    def word_index(self):
-        tokenizer = self.tokenizer
-        print(tokenizer.word_index)
 
     def predict(self):
         R_pred = self.preprocessing()

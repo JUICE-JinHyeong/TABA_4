@@ -1,0 +1,50 @@
+name: "psng_predictor"
+backend : "python"
+max_batch_size: 1
+input [
+  {
+    name: "input"
+    data_type: TYPE_STRING
+    dims: [1]
+  }
+]
+output [
+  {
+    name: "output"
+    data_type: TYPE_INT32
+    dims: [1]
+  }
+]
+parameters [
+  {
+    key: "config_file",
+    value: {string_value: "/models/psng_predictor/1"}
+  }
+]
+
+
+
+name: "psng_predictor"
+platform: "python_backend"
+max_batch_size: 1
+input [
+  {
+    name: "REVIEW"
+    data_type: TYPE_STRING
+    dims: [1]
+  }
+]
+output [
+  {
+    name: "prediction"
+    data_type: TYPE_STRING
+    dims: [1]
+  }
+]
+input [
+  {
+    name: "csv_input"
+    data_type: TYPE_STRING
+    dims: [1]
+  }
+]
