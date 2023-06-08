@@ -1,0 +1,45 @@
+.card-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: darkblue;
+}
+
+.custom-text {
+    font-size: 13px;
+    color: #333;
+  }
+
+  .card {
+    margin: 3px; 
+    
+  }
+  
+  .popover-content {
+    /* padding */
+  }
+  
+  .MuiPopover-paper {
+    width: 370px; 
+  }
+  
+  .popup-text-title {
+    font-size: 11.5px;
+    font-weight: bold;
+  }
+
+  .popup-text-data {
+    font-size: 11px;
+  }
+
+  .card .MuiCardHeader-root {
+    padding: 10px 8px; 
+}
+.card .MuiCardContent-root {
+    padding: 0px 10px; 
+}
+
+.popover-content .MuiTypography-paragraph {
+    line-height: 1.2;
+    margin: 0;
+}
+

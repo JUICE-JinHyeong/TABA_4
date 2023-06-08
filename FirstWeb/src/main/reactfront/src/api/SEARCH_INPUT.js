@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './SEARCH_INPUT_2.css';
 
 function RecentSearches() {
   const [recentSearches, setRecentSearches] = useState([]);
@@ -11,7 +12,7 @@ function RecentSearches() {
   }, []);
 
   return (
-    <div>
+    <div className="SEARCH_INPUT">
       <h2>Recent Searches</h2>
       <ul>
         {recentSearches.map((search, index) => (

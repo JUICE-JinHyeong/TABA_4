@@ -8,7 +8,6 @@ import { styled } from '@mui/material/styles';
 import { searchFromDB } from '../../api/REST_INFO'; // or wherever you put the file
 import queryString from 'query-string'; // Query-string 패키지를 이용해서 URL에서 파라미터를 추출합니다.
 
-
 const PaginationContainer = styled('div')({ // 페이지네이션 기능
     display: 'flex',
     justifyContent: 'center',
@@ -90,7 +89,7 @@ export default function MiddlePage() {
             <Grid container spacing={2}>
                 <Grid item xs={2}>
                     <Box display="flex" alignItems="center" height="100%">
-                        <h1 onClick={handleLogoClick}>나리뷰</h1>
+                        <h1 onClick={handleLogoClick}>Re.staurant</h1>
                     </Box>
                 </Grid>
                 <Grid item xs={10}>

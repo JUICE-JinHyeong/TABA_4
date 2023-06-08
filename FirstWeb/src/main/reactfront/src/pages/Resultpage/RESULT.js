@@ -33,7 +33,7 @@ export default function ResultPage() {
       <Grid container spacing={2}>
         <Grid item xs={2}> {/* 왼쪽 로고란 */}
           <Box display="flex" alignItems="center" height="100%">
-            <h1 onClick={handleLogoClick}>나리뷰</h1>
+            <h1 onClick={handleLogoClick}>Re.staurant</h1>
           </Box>
         </Grid>
         <Grid item xs={10}> {/* 검색창 */}

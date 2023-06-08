@@ -8,10 +8,11 @@ import SearchBar from '../SearchBar';
 import MiddlePage from '../Middlepage/MIDDLE';
 import ResultPage from '../Resultpage/RESULT';
 import RecentSearches from '../../api/SEARCH_INPUT';
+import RecentSearches_2 from '../../api/SEARCH_INPUT_2';
 
 export default function App() {
-  
- 
+
+
   const HomePage = () => (
     <Box item sx={{ flexGrow: 1 }}>
       <Grid container spacing={3}>
@@ -24,13 +25,15 @@ export default function App() {
           style={{ minHeight: '70vh' }}
         >
           <Grid item>
-            <h1>나리뷰</h1>
+            <h1>Re<br />staurant</h1>
+
           </Grid>
           <Grid item>
             <SearchBar />
           </Grid>
           <Grid item>
-            <RecentSearches/>
+            <RecentSearches />
+            <RecentSearches_2 />
           </Grid>
 
         </Grid>

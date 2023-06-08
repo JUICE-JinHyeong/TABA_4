@@ -1,0 +1,31 @@
+.recent-searches-list {
+    list-style-type: none; 
+    padding-left: 0; 
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 900;  /* 텍스트 굵기 */
+    font-size: 18px;
+  }
+
+.recent-searches-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 20px; 
+}
+
+.recent-searches-item {
+  padding: 10px;
+}
+
+.recent-searches-title {
+  display: flex;
+
+  justify-content: center;
+}
+
+.SEARCH_INPUT {
+  position: absolute;
+  right: 10%;
+}
