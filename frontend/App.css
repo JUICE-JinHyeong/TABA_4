@@ -154,7 +154,8 @@ input[type="checkbox"] {     /*체크박스*/
 
 .selected-option {        /*체크박스 선택시 상태출력창*/
   position: absolute;
-  left: 380px; /* 원하는 위치로 조정해주세요 */
+  left: 380
+  px; /* 원하는 위치로 조정해주세요 */
   top: 348px; /* 원하는 위치로 조정해주세요 */
   color: #000000; /* 텍스트 색상 */
   font-size: 23px; /* 텍스트 크기 */
