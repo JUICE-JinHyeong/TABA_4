@@ -1,10 +1,8 @@
 // com.example.FirstWeb.controller.RecentSearchController.java
-package com.example.FirstWeb.controller;
+package com.example.FirstWeb.SEARCH_INPUT_DB.controller;
 
-import com.example.FirstWeb.dto.RecentSearchDto;
-import com.example.FirstWeb.service.RecentSearchService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import com.example.FirstWeb.SEARCH_INPUT_DB.dto.RecentSearchDto;
+import com.example.FirstWeb.SEARCH_INPUT_DB.service.RecentSearchService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

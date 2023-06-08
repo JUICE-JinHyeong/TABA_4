@@ -1,4 +1,4 @@
-package com.example.FirstWeb.SearchFromDB;
+package com.example.FirstWeb.REST_INFO_DB;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

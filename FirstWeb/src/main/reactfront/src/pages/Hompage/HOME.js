@@ -2,12 +2,11 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import SearchBar from '../SearchBar';
 import MiddlePage from '../Middlepage/MIDDLE';
 import ResultPage from '../Resultpage/RESULT';
-import RecentSearches from '../../api/SEARCH_INPUT';
+import RecentSearch from './RecentSearch';
 
 export default function App() {
   
@@ -30,9 +29,8 @@ export default function App() {
             <SearchBar />
           </Grid>
           <Grid item>
-            <RecentSearches/>
+            <RecentSearch/>
           </Grid>
-
         </Grid>
         <Grid item xs={2} />
       </Grid>

@@ -1,9 +1,9 @@
 // com.example.FirstWeb.service.RecentSearchService.java
-package com.example.FirstWeb.service;
+package com.example.FirstWeb.SEARCH_INPUT_DB.service;
 
-import com.example.FirstWeb.dto.RecentSearchDto;
-import com.example.FirstWeb.repository.RecentSearchRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.FirstWeb.SEARCH_INPUT_DB.dto.RecentSearchDto;
+import com.example.FirstWeb.SEARCH_INPUT_DB.repository.RecentSearchRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -25,8 +25,14 @@ public class RecentSearchService {
 
         List<Object[]> searchResults = recentSearchRepository.findTopSearchesInLastWeek(startDate, endDate);
 
+        // 상위 10개 결과만 추출
+        List<Object[]> topSearchResults = searchResults.stream()
+                .sorted((a, b) -> ((Long) b[1]).compareTo((Long) a[1])) // 검색 횟수를 기준으로 내림차순 정렬
+                .limit(10) // 상위 10개만 추출
+                .collect(Collectors.toList());
+
         List<RecentSearchDto> recentSearchDtos = new ArrayList<>();
-        for (Object[] result : searchResults) {
+        for (Object[] result : topSearchResults) {
             String searchInput = (String) result[0];
             Long searchCount = (Long) result[1];
             RecentSearchDto recentSearchDto = new RecentSearchDto(searchInput, searchCount);
@@ -35,4 +41,6 @@ public class RecentSearchService {
 
         return recentSearchDtos;
     }
+
+
 }

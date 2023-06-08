@@ -52,33 +52,35 @@ export default function Carddata({ data }) {
         onClick={handleCardClick}
         component="img"
         height="194"
-        image={data.imageURL[0].replace(/'/g, '')} // 작은 따옴표를 제거합니다.
+        image={data.imageURL[0].replace(/'/g, '')} // Remove single quotes
         alt="식당이미지"
       />
       <CardContent onClick={handleCardClick}>
-        <Typography variant="body2" color="text.secondary">
-          {data.description && data.description.length > 50
-            ? expanded
-              ? data.description
-              : `${data.description.substring(0, 50)}...`
-            : data.description}
-        </Typography>
+        <Typography paragraph>상세주소: {data.address}</Typography>
+        <Typography paragraph>영업시간: {data.opentime}</Typography>
+        <Typography paragraph>전화번호: {data.pn}</Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-      </CardActions>
+      {data.description && (
+        <CardActions disableSpacing>
+          <ExpandMore
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </ExpandMore>
+        </CardActions>
+      )}
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>상세주소: {data.address}</Typography>
-          <Typography paragraph>영업시간: {data.opentime}</Typography>
-          <Typography paragraph>전화번호: {data.pn}</Typography>
+          <Typography variant="body2" color="text.secondary">
+            {data.description && data.description.length > 50
+              ? expanded
+                ? data.description
+                : `${data.description.substring(0, 50)}...`
+              : data.description}
+          </Typography>
         </CardContent>
       </Collapse>
     </Card>

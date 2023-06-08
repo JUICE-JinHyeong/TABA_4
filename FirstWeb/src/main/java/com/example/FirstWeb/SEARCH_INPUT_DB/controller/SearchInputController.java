@@ -1,9 +1,9 @@
 // com.example.FirstWeb.controller.SearchInputController.java
-package com.example.FirstWeb.controller;
+package com.example.FirstWeb.SEARCH_INPUT_DB.controller;
 
-import com.example.FirstWeb.dto.SearchInputDto;
-import com.example.FirstWeb.model.SearchInput;
-import com.example.FirstWeb.service.SearchInputService;
+import com.example.FirstWeb.SEARCH_INPUT_DB.dto.SearchInputDto;
+import com.example.FirstWeb.SEARCH_INPUT_DB.model.SearchInput;
+import com.example.FirstWeb.SEARCH_INPUT_DB.service.SearchInputService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

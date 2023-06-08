@@ -1,4 +1,4 @@
-package com.example.FirstWeb.dto;
+package com.example.FirstWeb.SEARCH_INPUT_DB.dto;
 import lombok.Getter;
 import lombok.Setter;
 

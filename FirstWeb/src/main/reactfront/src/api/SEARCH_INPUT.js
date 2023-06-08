@@ -1,28 +1,18 @@
-import React, { useEffect, useState } from 'react';
+// SEARCH_INPUT.js
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function RecentSearches() {
+export default function useFetchRecentSearches() {
   const [recentSearches, setRecentSearches] = useState([]);
 
   useEffect(() => {
-    fetch('/api/recent')
-      .then(response => response.json())
-      .then(data => setRecentSearches(data))
+    axios.get('/api/recent')
+      .then(response => {
+        console.log(response.data);  // <- Add this line
+        setRecentSearches(response.data)
+      })
       .catch(error => console.log(error));
   }, []);
 
-  return (
-    <div>
-      <h2>Recent Searches</h2>
-      <ul>
-        {recentSearches.map((search, index) => (
-          <li key={index}>
-            <strong>Search Input:</strong> {search.searchInput}, 
-            <strong> Search Count:</strong> {search.searchCount}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+  return recentSearches;
 }
-
-export default RecentSearches;

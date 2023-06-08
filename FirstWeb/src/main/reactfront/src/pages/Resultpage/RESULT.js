@@ -3,8 +3,8 @@ import { Container, Grid, Box, Paper } from '@mui/material';
 import * as React from 'react';
 import { styled, makeStyles } from '@mui/material/styles';
 import SearchBar from '../SearchBar';
-import Image from '../Middlepage/Image';
-import Table from '../Middlepage/Table';
+import Image from './Image';
+import Table from './Table';
 import { useNavigate,useLocation } from 'react-router-dom';
 
 
@@ -29,7 +29,7 @@ export default function ResultPage() {
   };
   
   return (
-    <Container style={{ height: "125vh" }}>
+    <Container style={{ height: "200vh" }}>
       <Grid container spacing={2}>
         <Grid item xs={2}> {/* 왼쪽 로고란 */}
           <Box display="flex" alignItems="center" height="100%">
@@ -48,7 +48,7 @@ export default function ResultPage() {
         </Grid>
         <Grid item xs={8}> {/* 오른쪽 워드 클라우드 란 */}
           <Item>
-            <TabPanel />
+            <TabPanel data={data}/>
           </Item>
         </Grid>
       </Grid>
@@ -56,4 +56,3 @@ export default function ResultPage() {
 
   );
 }
-                 /* 컴포넌트를 외부로 내보내기(exports)위해 사용. 다른 파일에서 이 컴포넌트를 불러와 사용 */

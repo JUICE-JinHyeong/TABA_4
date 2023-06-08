@@ -1,15 +1,11 @@
 // com.example.FirstWeb.service.SearchInputService.java
-package com.example.FirstWeb.service;
+package com.example.FirstWeb.SEARCH_INPUT_DB.service;
 
-import com.example.FirstWeb.dto.RecentSearchDto;
-import com.example.FirstWeb.model.SearchInput;
-import com.example.FirstWeb.repository.SearchInputRepository;
+import com.example.FirstWeb.SEARCH_INPUT_DB.model.SearchInput;
+import com.example.FirstWeb.SEARCH_INPUT_DB.repository.SearchInputRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
-import com.example.FirstWeb.dto.SearchInputDto;
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
