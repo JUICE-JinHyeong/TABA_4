@@ -59,12 +59,11 @@ export default function BasicTabs({ data }) {
             <TabPanel value={value} index={0}>
                 <WordCloudComponent />
             </TabPanel>
-            <TabPanel value={value} index={1} restId={data.id}>
-                <ReviewList restId={data.id} label='2' />
+            <TabPanel value={value} index={1}>
+                <ReviewList restId={data.id} label="0" />
             </TabPanel>
-            <TabPanel value={value} index={2} restId={data.id}>
-                <ReviewList restId={data.id} label='0' />
-                <ReviewList restId={data.id} label='1' />
+            <TabPanel value={value} index={2}>
+                <ReviewList restId={data.id} label="1" />
             </TabPanel>
 
         </Box>
