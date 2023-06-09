@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Grid, Box, CircularProgress } from '@mui/material';
+import { Container, Grid, Box, CircularProgress, Pagination  } from '@mui/material';
 import SearchBar from '../SearchBar';
 import CardComponent from './Card';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Pagination from '@mui/material/Pagination';
 import { styled } from '@mui/material/styles';
 import { searchFromDB } from '../../api/REST_INFO'; // or wherever you put the file
 import queryString from 'query-string'; // Query-string 패키지를 이용해서 URL에서 파라미터를 추출합니다.

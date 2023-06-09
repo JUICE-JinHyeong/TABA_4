@@ -1,5 +1,5 @@
 // com.example.FirstWeb.model.SearchInput.java
-package com.example.FirstWeb.SEARCH_INPUT_DB.model;
+package com.example.FirstWeb.SEARCH_INPUT_DB.entity;
 
 import lombok.*;
 

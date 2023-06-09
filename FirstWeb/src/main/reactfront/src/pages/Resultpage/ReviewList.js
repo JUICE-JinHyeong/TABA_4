@@ -1,10 +1,10 @@
-import { useReviews } from '../../api/useReviews';
-
+import { useReviews } from '../../api/REVIEW_TF';
 import React, { useState } from 'react';
 import { Avatar, Grid, List, ListItem, ListItemText, CircularProgress, Skeleton } from '@mui/material';
 
 const Review = ({ review, writer, writeDay, visitCount, avatar, images }) => {
   const [imgLoading, setImgLoading] = useState(Array(images.length).fill(true));
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleImageLoad = (index) => {
     setImgLoading(prevState => {
@@ -12,6 +12,18 @@ const Review = ({ review, writer, writeDay, visitCount, avatar, images }) => {
       newState[index] = false;
       return newState;
     });
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  const getImageHeight = () => {
+    return isHovered ? '250px' : '150px';
   };
 
   return (
@@ -28,11 +40,20 @@ const Review = ({ review, writer, writeDay, visitCount, avatar, images }) => {
       <Grid item xs={12}>
         <p>{review}</p>
       </Grid>
-      
       <div style={{ display: 'flex', overflowX: 'auto' }}>
         {images.map((image, index) => (
-          <div key={index} style={{ marginRight: '5px' }}>
-            <img src={image} alt={`review ${index}`} onLoad={() => handleImageLoad(index)} style={{ height: '150px', width: 'auto', borderRadius: '5px' }} />
+          <div
+            key={index}
+            style={{ marginRight: '5px' }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <img
+              src={image}
+              alt={`review ${index}`}
+              onLoad={() => handleImageLoad(index)}
+              style={{ height: getImageHeight(), width: 'auto', borderRadius: '5px' }}
+            />
             {imgLoading[index] && <CircularProgress />}
           </div>
         ))}
@@ -40,8 +61,7 @@ const Review = ({ review, writer, writeDay, visitCount, avatar, images }) => {
       <Grid item xs={12}>
         <h5 style={{ marginTop: '1px' }}>{writeDay}</h5>
       </Grid>
-    </div >
-    
+    </div>
   );
 };
 
@@ -63,7 +83,7 @@ const ReviewList = ({ restId, label }) => {
           <ListItemText
             primary={
               <Grid container spacing={2}>
-                <Grid item xs={12} >
+                <Grid item xs={12}>
                   <Review review={review.review} writer={review.writer} writeDay={review.writeDay} visitCount={review.visitCount} avatar={review.avatar} images={review.imageURL || []} />
                 </Grid>
               </Grid>

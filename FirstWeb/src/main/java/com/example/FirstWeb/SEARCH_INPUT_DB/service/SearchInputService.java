@@ -1,7 +1,7 @@
 // com.example.FirstWeb.service.SearchInputService.java
 package com.example.FirstWeb.SEARCH_INPUT_DB.service;
 
-import com.example.FirstWeb.SEARCH_INPUT_DB.model.SearchInput;
+import com.example.FirstWeb.SEARCH_INPUT_DB.entity.SearchInput;
 import com.example.FirstWeb.SEARCH_INPUT_DB.repository.SearchInputRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

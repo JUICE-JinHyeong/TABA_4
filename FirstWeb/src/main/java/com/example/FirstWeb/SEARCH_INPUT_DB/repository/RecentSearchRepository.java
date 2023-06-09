@@ -1,7 +1,7 @@
 // com.example.FirstWeb.repository.RecentSearchRepository.java
 package com.example.FirstWeb.SEARCH_INPUT_DB.repository;
 
-import com.example.FirstWeb.SEARCH_INPUT_DB.model.SearchInput;
+import com.example.FirstWeb.SEARCH_INPUT_DB.entity.SearchInput;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

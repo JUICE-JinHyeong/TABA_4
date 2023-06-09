@@ -2,7 +2,7 @@
 
 package com.example.FirstWeb.SEARCH_INPUT_DB.repository;
 
-import com.example.FirstWeb.SEARCH_INPUT_DB.model.SearchInput;
+import com.example.FirstWeb.SEARCH_INPUT_DB.entity.SearchInput;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
