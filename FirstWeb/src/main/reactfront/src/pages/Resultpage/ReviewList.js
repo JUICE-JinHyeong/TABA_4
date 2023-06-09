@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
 import { useReviews } from '../../api/useReviews';
-import { Avatar, List, ListItem, ListItemText, Skeleton, CircularProgress } from '@mui/material';
 
+import React, { useState } from 'react';
+import { Avatar, Grid, List, ListItem, ListItemText, CircularProgress, Skeleton } from '@mui/material';
 
-const Review = ({ review, writer, avatar, images }) => {
+const Review = ({ review, writer, writeDay, visitCount, avatar, images }) => {
   const [imgLoading, setImgLoading] = useState(Array(images.length).fill(true));
 
   const handleImageLoad = (index) => {
@@ -16,25 +16,37 @@ const Review = ({ review, writer, avatar, images }) => {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Avatar src={avatar} alt={writer} />
-        <h2 style={{ marginLeft: '10px' }}>{writer}</h2>
-      </div>
-      <p>{review}</p>
-      <div style={{display: 'flex', overflowX: 'auto'}}>
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={1}>
+          <Avatar src={avatar} alt={writer} style={{ width: '50px', height: '50px' }} />
+        </Grid>
+        <Grid item xs={10}>
+          <h4 style={{ marginBottom: '1px' }}>{writer}</h4>
+          <h5 style={{ marginTop: '1px' }}>{visitCount}</h5>
+        </Grid>
+      </Grid>
+      <Grid item xs={12}>
+        <p>{review}</p>
+      </Grid>
+      
+      <div style={{ display: 'flex', overflowX: 'auto' }}>
         {images.map((image, index) => (
           <div key={index} style={{ marginRight: '5px' }}>
-            <img src={image} alt={`review ${index}`} onLoad={() => handleImageLoad(index)} style={{ height: '150px', width: 'auto', borderRadius: '5px' }}/>
+            <img src={image} alt={`review ${index}`} onLoad={() => handleImageLoad(index)} style={{ height: '150px', width: 'auto', borderRadius: '5px' }} />
             {imgLoading[index] && <CircularProgress />}
           </div>
         ))}
       </div>
-    </div>
+      <Grid item xs={12}>
+        <h5 style={{ marginTop: '1px' }}>{writeDay}</h5>
+      </Grid>
+    </div >
+    
   );
 };
 
-const ReviewList = ({ restId, label }) => {  
-  const { reviews, isLoading } = useReviews(restId, label); 
+const ReviewList = ({ restId, label }) => {
+  const { reviews, isLoading } = useReviews(restId, label);
 
   if (isLoading) {
     return <Skeleton variant="rectangular" width="100vh" height="auto" />;
@@ -49,7 +61,13 @@ const ReviewList = ({ restId, label }) => {
       {reviews.map((review, index) => (
         <ListItem divider key={index}>
           <ListItemText
-            primary={<Review review={review.review} writer={review.writer} avatar={review.avatar} images={review.imageURL || []} />}
+            primary={
+              <Grid container spacing={2}>
+                <Grid item xs={12} >
+                  <Review review={review.review} writer={review.writer} writeDay={review.writeDay} visitCount={review.visitCount} avatar={review.avatar} images={review.imageURL || []} />
+                </Grid>
+              </Grid>
+            }
           />
         </ListItem>
       ))}
@@ -59,9 +77,6 @@ const ReviewList = ({ restId, label }) => {
 
 export default ReviewList;
 
-// import axios from 'axios';
-
-// const useReviews = (restId, label) => {
 //     const [reviews, setReviews] = useState([]);
 
 //     useEffect(() => {
