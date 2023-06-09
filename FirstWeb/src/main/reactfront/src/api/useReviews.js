@@ -7,10 +7,11 @@ const transformData = (data) => {
       const imageUrls = imageUrlsString.split(', ');
   
       return {
-        review: data.review,
-        avater: data.profile,
+        review: data.REVIEW,
+        avatar: data.PROFILE,
         myPlace: data.MY_PLACE,
         writer: data.WRITER,
+        writeDay: data.WRITE_DAY,
         label: data.LABEL,
         imageURL: imageUrls,
       };
@@ -20,6 +21,7 @@ const transformData = (data) => {
         review: data.REVIEW,
         avater: data.PROFILE,
         myPlace: data.MY_PLACE,
+        writeDay: data.WRITE_DAY,
         writer: data.WRITER,
         label: data.LABEL,
         imageURL: [], // Set an empty array as the default value for imageURL
