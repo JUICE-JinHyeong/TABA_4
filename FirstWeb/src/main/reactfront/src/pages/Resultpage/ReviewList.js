@@ -1,12 +1,10 @@
 import { useReviews } from '../../api/REVIEW_TF';
 import React, { useState } from 'react';
 import { Avatar, Grid, List, ListItem, ListItemText, CircularProgress, Skeleton } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 
-const Review = ({ review, writer, writeDay, visitCount, avatar, images }) => {
+const Review = ({ review, writer, writeDay, visitCount, avatar, images, myPlace }) => {
   const [imgLoading, setImgLoading] = useState(Array(images.length).fill(true));
   const [isHovered, setIsHovered] = useState(false);
-  const navigate = useNavigate();
 
   const handleImageLoad = (index) => {
     setImgLoading(prevState => {
@@ -29,20 +27,15 @@ const Review = ({ review, writer, writeDay, visitCount, avatar, images }) => {
   };
 
   const handleAvatarClick = () => {
-    // Navigate to review.myPlace URL
-    navigate(review.myPlace);
+    // Open the link in a new tab
+    window.open(myPlace, '_blank');
   };
 
   return (
     <div>
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={1}>
-          <Avatar
-            src={avatar}
-            alt={writer}
-            style={{ width: '50px', height: '50px', cursor: 'pointer' }}
-            onClick={handleAvatarClick}
-          />
+          <Avatar src={avatar} alt={writer} style={{ width: '50px', height: '50px', cursor: 'pointer' }} onClick={handleAvatarClick} />
         </Grid>
         <Grid item xs={10}>
           <h4 style={{ marginBottom: '1px' }}>{writer}</h4>
@@ -96,7 +89,7 @@ const ReviewList = ({ restId, label }) => {
             primary={
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Review review={review.review} writer={review.writer} writeDay={review.writeDay} visitCount={review.visitCount} avatar={review.avatar} images={review.imageURL || []} />
+                  <Review review={review.review} writer={review.writer} writeDay={review.writeDay} visitCount={review.visitCount} avatar={review.avatar} images={review.imageURL || []} myPlace={review.myPlace} />
                 </Grid>
               </Grid>
             }
@@ -108,6 +101,7 @@ const ReviewList = ({ restId, label }) => {
 };
 
 export default ReviewList;
+
 
 //     const [reviews, setReviews] = useState([]);
 

@@ -7,15 +7,14 @@ export default function RecentSearches() {
 
   return (
     <div>
-      <h2>Recent Searches</h2>
-      <ul>
+      <h2>일주일간 검색 순위</h2>
+      <ol>
         {Object.values(recentSearches).map((search, index) => (
           <li key={index}>
-            <strong>Search Input:</strong> {search.searchInput}, 
-            <strong> Search Count:</strong> {search.searchCount}
+            <strong> Search Input: {search.searchInput}</strong>
           </li>
         ))}
-      </ul>
+      </ol>
     </div>
   );
 }
