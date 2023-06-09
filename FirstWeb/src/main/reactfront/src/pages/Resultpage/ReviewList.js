@@ -1,65 +1,43 @@
 import React, { useState } from 'react';
 import { useReviews } from '../../api/useReviews';
-import CircularProgress from '@mui/material/CircularProgress';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Avatar from '@mui/material/Avatar';
-import ListItemText from '@mui/material/ListItemText';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
+import { Avatar, List, ListItem, ListItemText, Skeleton, CircularProgress } from '@mui/material';
 
-const Review = ({ review, writer, images }) => {
-  const [expanded, setExpanded] = useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+const Review = ({ review, writer, avatar, images }) => {
+  const [imgLoading, setImgLoading] = useState(Array(images.length).fill(true));
+
+  const handleImageLoad = (index) => {
+    setImgLoading(prevState => {
+      const newState = [...prevState];
+      newState[index] = false;
+      return newState;
+    });
   };
 
   return (
     <div>
-      <h2>{writer}</h2>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Avatar src={avatar} alt={writer} />
+        <h2 style={{ marginLeft: '10px' }}>{writer}</h2>
+      </div>
       <p>{review}</p>
-      {images.length > 0 && 
-        <Button onClick={handleExpandClick}>
-          Show Images
-        </Button>
-      }
-      {expanded && 
-        <Accordion expanded={expanded}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>Images</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Carousel>
-              {images.map((image, index) => (
-                <div key={index}>
-                  <img src={image} alt={`review ${index}`} />
-                </div>
-              ))}
-            </Carousel>
-          </AccordionDetails>
-        </Accordion>
-      }
+      <div style={{display: 'flex', overflowX: 'auto'}}>
+        {images.map((image, index) => (
+          <div key={index} style={{ marginRight: '5px' }}>
+            <img src={image} alt={`review ${index}`} onLoad={() => handleImageLoad(index)} style={{ height: '150px', width: 'auto', borderRadius: '5px' }}/>
+            {imgLoading[index] && <CircularProgress />}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
-const ReviewList = ({ restId }) => {
-  const { reviews, isLoading } = useReviews(restId);
-  console.log(reviews)
+const ReviewList = ({ restId, label }) => {  
+  const { reviews, isLoading } = useReviews(restId, label); 
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <Skeleton variant="rectangular" width="100vh" height="auto" />;
   }
 
   if (reviews.length === 0) {
@@ -70,9 +48,8 @@ const ReviewList = ({ restId }) => {
     <List>
       {reviews.map((review, index) => (
         <ListItem divider key={index}>
-          <Avatar src={review.avatar} alt={review.writer} />
           <ListItemText
-            primary={<Review review={review.review} writer={review.writer} images={review.imageURL || []} />}
+            primary={<Review review={review.review} writer={review.writer} avatar={review.avatar} images={review.imageURL || []} />}
           />
         </ListItem>
       ))}
@@ -81,7 +58,6 @@ const ReviewList = ({ restId }) => {
 };
 
 export default ReviewList;
-
 
 // import axios from 'axios';
 

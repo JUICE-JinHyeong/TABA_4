@@ -53,18 +53,24 @@ export default function BasicTabs({ data }) {
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                     <Tab label="워드 클라우드" {...a11yProps(0)} />
                     <Tab label="부정" {...a11yProps(1)} />
-                    <Tab label="긍정" {...a11yProps(2)} />
+                    <Tab label="중립" {...a11yProps(2)} />
+                    <Tab label="긍정" {...a11yProps(3)} />
+
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
                 <WordCloudComponent />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <ReviewList restId={data.id} label="0" />
+                <ReviewList restId={data.id} label="2" />
             </TabPanel>
             <TabPanel value={value} index={2}>
                 <ReviewList restId={data.id} label="1" />
             </TabPanel>
+            <TabPanel value={value} index={3}>
+                <ReviewList restId={data.id} label="0" />
+            </TabPanel>
+
 
         </Box>
     );
