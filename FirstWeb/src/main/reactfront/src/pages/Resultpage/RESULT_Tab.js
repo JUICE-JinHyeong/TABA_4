@@ -5,7 +5,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Tab_WordCloud from './Tab_WordCloud';
-import ReviewList from './Tab_ReviewList';
+import Tab_ReviewList from './Tab_ReviewList';
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -62,13 +62,13 @@ export default function BasicTabs({ data }) {
                 <Tab_WordCloud restId={data.id} />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <ReviewList restId={data.id} label="2" />
+                <Tab_ReviewList restId={data.id} label="2" />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <ReviewList restId={data.id} label="1" />
+                <Tab_ReviewList restId={data.id} label="1" />
             </TabPanel>
             <TabPanel value={value} index={3}>
-                <ReviewList restId={data.id} label="0" />
+                <Tab_ReviewList restId={data.id} label="0" />
             </TabPanel>
 
 

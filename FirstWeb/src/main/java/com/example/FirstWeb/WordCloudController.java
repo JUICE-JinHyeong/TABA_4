@@ -23,7 +23,7 @@ public class WordCloudController {
     @CrossOrigin
     @GetMapping("/wordcloud")
     public ResponseEntity<List<Map<String, Object>>> getReviewsByRestId(@RequestParam("rest_id") String restId) {
-        String sql = "SELECT * FROM WORDCLOUDE WHERE REST_ID = ?";
+        String sql = "SELECT * FROM WORD_CLOUDE WHERE REST_ID = ?";
         List<Map<String, Object>> reviews = null;
         try {
             reviews = jdbcTemplate.queryForList(sql, restId);

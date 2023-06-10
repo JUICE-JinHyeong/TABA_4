@@ -1,4 +1,4 @@
-import { useReviews } from '../../api/REVIEW_TF';
+import { REVIEW_TF } from '../../api/REVIEW_TF';
 import React, { useState } from 'react';
 import { Avatar, Grid, List, ListItem, ListItemText, CircularProgress, Skeleton } from '@mui/material';
 
@@ -71,7 +71,7 @@ const Review = ({ review, writer, writeDay, visitCount, avatar, images, myPlace 
 };
 
 const ReviewList = ({ restId, label }) => {
-  const { reviews, isLoading } = useReviews(restId, label);
+  const { reviews, isLoading } = REVIEW_TF(restId, label);
 
   if (isLoading) {
     return <Skeleton variant="rectangular" width="100vh" height="auto" />;

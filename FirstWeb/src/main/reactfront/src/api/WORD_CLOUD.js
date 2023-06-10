@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export const WordCloud = restId  => {
+const transformData = (data) => {
+    return {
+        word: data.WORD,
+        count: data.WORD_COUNT
+    };
+};
+
+export const WordCloud = ({ restId })  => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -12,13 +19,8 @@ export const WordCloud = restId  => {
                     { params: { rest_id: restId } }
                 );
 
-                const transformData = (data) => {
-                    return {
-                        word: data.WORD,
-                        count: data.WORDCOUNT
-                    };
-                };
                 
+                console.log(result.data); // 응답 데이터 확인
                 let transformedData = result.data.map(transformData);
                 setData(transformedData);
                 

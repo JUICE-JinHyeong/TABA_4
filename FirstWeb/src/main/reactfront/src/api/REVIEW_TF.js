@@ -24,7 +24,7 @@ const transformData = (data) => {
   
 
 
-export const useReviews = (restId, label) => {
+export const REVIEW_TF = (restId, label) => {
   const [reviews, setReviews] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
