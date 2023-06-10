@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import SearchBar from '../SearchBar';
 import MiddlePage from '../Middlepage/MIDDLE';
 import ResultPage from '../Resultpage/RESULT';
-import RecentSearch from './RecentSearch';
+import RecentSearch from './HOME_RecentSearch';
 
 export default function App() {
   

@@ -1,25 +1,56 @@
-import React from "react";
-import { Box } from "@mui/material";
-import { TagCloud } from "react-tagcloud";
+import { WordCloud as fetchWordCloud } from '../../api/WORD_CLOUD'
+import React, { useEffect, useRef } from 'react';
+import { select } from 'd3-selection';
+import cloud from 'd3-cloud';
+import { scaleLinear } from 'd3-scale';
+import Skeleton from '@mui/material/Skeleton';
 
-const data = [
-  { value: 'JavaScript', count: 38 },
-  { value: 'React', count: 30 },
-  { value: 'Nodejs', count: 28 },
-  { value: 'Express.js', count: 25 },
-  { value: 'HTML5', count: 33 },
-  { value: 'MongoDB', count: 18 },
-  { value: 'CSS3', count: 20 },
-];
+const Tab_WordCloud = ({ data, label }) => {
+    const svgRef = useRef();
+    const { wordcloud, isLoading } = fetchWordCloud(data, label);
+    const width = 500;
+    const height = 500;
+    useEffect(() => {
+        if (!isLoading) {
+            const drawWordCloud = () => {
+                const wordCounts = wordcloud.map(item => item.count);
+                const sizeScale = scaleLinear().domain([Math.min(...wordCounts), Math.max(...wordCounts)]).range([20, 100]);
 
-const SimpleCloud = () => (
-  <Box width="100%" height="100px">
-    <TagCloud
-      minSize={12}
-      maxSize={35}
-      tags={data}
-    />
-  </Box>
-);
+                cloud()
+                    .size([width, height])
+                    .words(wordcloud.map(d => ({ text: d.word, size: sizeScale(d.count) })))
+                    .rotate(0)
+                    .fontSize(d => d.size)
+                    .on('end', words => {
+                        select(svgRef.current)
+                            .attr('width', width)
+                            .attr('height', height)
+                            .append('g')
+                            .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
+                            .selectAll('text')
+                            .data(words)
+                            .enter().append('text')
+                            .style('font-size', d => d.size + 'px')
+                            .attr('text-anchor', 'middle')
+                            .attr('transform', d => 'translate(' + [d.x, d.y] + ')rotate(' + d.rotate + ')')
+                            .text(d => d.text);
+                    })
+                    .start();
+            };
 
-export default SimpleCloud;
+            drawWordCloud();
+        }
+    }, [isLoading, wordcloud]);
+
+    if (isLoading) {
+        return <Skeleton variant="rectangular" width="100%" height="auto" />;
+    }
+
+    return (
+        <div>
+            <svg ref={svgRef}></svg>
+        </div>
+    );
+};
+
+export default Tab_WordCloud;
