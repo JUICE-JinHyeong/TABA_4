@@ -4,8 +4,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import WordCloudComponent from './WordCloudComponent';
-import ReviewList from './ReviewList';
+import WordCloudComponent from './Tab_WordCloud';
+import ReviewList from './Tab_ReviewList';
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 

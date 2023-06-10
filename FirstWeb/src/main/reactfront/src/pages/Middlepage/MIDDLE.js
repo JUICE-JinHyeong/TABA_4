@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Grid, Box, CircularProgress, Pagination  } from '@mui/material';
 import SearchBar from '../SearchBar';
-import CardComponent from './Card';
+import CardComponent from './MIDDLE_Card';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { searchFromDB } from '../../api/REST_INFO'; // or wherever you put the file

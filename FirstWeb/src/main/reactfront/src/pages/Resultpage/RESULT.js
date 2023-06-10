@@ -1,10 +1,10 @@
-import TabPanel from './TabPanel';
+import TabPanel from './RESULT_Tab';
 import { Container, Grid, Box, Paper } from '@mui/material';
 import * as React from 'react';
 import { styled, makeStyles } from '@mui/material/styles';
 import SearchBar from '../SearchBar';
-import Image from './Image';
-import Table from './Table';
+import Image from './RESULT_Image';
+import Table from './RESULT_Table';
 import { useNavigate,useLocation } from 'react-router-dom';
 
 
