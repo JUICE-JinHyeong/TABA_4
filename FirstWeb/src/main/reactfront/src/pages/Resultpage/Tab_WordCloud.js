@@ -28,7 +28,7 @@ const Tab_WordCloud = ({ restId }) => {
         .words(wordcloud.map(d => ({ text: d.word, size: sizeScale(d.count), finder: d.finder })))
         .rotate(0)
         .fontSize(d => d.size)
-        .padding(5)
+        .padding(10)
         .on('end', words => {
           const wordCloudSVG = select(svgRef.current)
             .attr('width', width)
@@ -52,7 +52,6 @@ const Tab_WordCloud = ({ restId }) => {
           function handleWordClick(event, d) {
             setSelectedWord(d.text);
             setSelectedWordFinder(d.finder);
-            console.log(d)
             setOpen(true);
           }
 
@@ -89,10 +88,10 @@ const Tab_WordCloud = ({ restId }) => {
   return (
     <div>
       <svg ref={svgRef}></svg>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth> {/* maxWidth와 fullWidth 속성 추가 */}
         <DialogTitle>Review List - {selectedWord}</DialogTitle>
-        <DialogContent sx={{ width: 600, height: 600 }}>
-          <Tab_ReviewList restId={restId} label="3" finder={selectedWordFinder} />
+        <DialogContent>
+          <Tab_ReviewList restId={restId} label="3" finder={selectedWordFinder} maxHeight="400px" /> {/* maxHeight 속성 추가 */}
         </DialogContent>
       </Dialog>
     </div>
