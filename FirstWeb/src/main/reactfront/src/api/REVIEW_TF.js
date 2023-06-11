@@ -24,7 +24,7 @@ const transformData = (data) => {
   
 
 
-export const REVIEW_TF = (restId, label) => {
+export const REVIEW_TF = (restId) => {
   const [reviews, setReviews] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -38,9 +38,7 @@ export const REVIEW_TF = (restId, label) => {
         });
 
         let transformedData = response.data.map(transformData).filter(Boolean);
-        if (label) {
-          transformedData = transformedData.filter(review => review.label === label);
-        }
+        
         setReviews(transformedData);
         console.log(response.data);
 
@@ -52,7 +50,7 @@ export const REVIEW_TF = (restId, label) => {
     };
 
     fetchReviews();
-  }, [restId, label]); // Add label to the dependency array
+  }, [restId]); // Add label to the dependency array
 
   return { reviews, isLoading };
 };

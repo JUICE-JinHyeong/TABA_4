@@ -15,16 +15,17 @@ const Tab_WordCloud = ({ restId }) => {
   const width = 500;
   const height = 500;
   const [selectedWord, setSelectedWord] = useState(null);
+  const [selectedWordFinder, setSelectedWordFinder] = useState(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (!isLoading && wordcloud) {
       const wordCounts = wordcloud.map(item => item.count);
       const sizeScale = scaleLinear().domain([Math.min(...wordCounts), Math.max(...wordCounts)]).range([20, 100]);
-
+  
       cloud()
         .size([width, height])
-        .words(wordcloud.map(d => ({ text: d.word, size: sizeScale(d.count) })))
+        .words(wordcloud.map(d => ({ text: d.word, size: sizeScale(d.count), finder: d.finder })))
         .rotate(0)
         .fontSize(d => d.size)
         .padding(5)
@@ -50,6 +51,8 @@ const Tab_WordCloud = ({ restId }) => {
 
           function handleWordClick(event, d) {
             setSelectedWord(d.text);
+            setSelectedWordFinder(d.finder);
+            console.log(d)
             setOpen(true);
           }
 
@@ -74,6 +77,8 @@ const Tab_WordCloud = ({ restId }) => {
   }, [isLoading]);
 
   const handleClose = () => {
+    setSelectedWord(null);
+    setSelectedWordFinder(null);
     setOpen(false);
   };
 
@@ -87,7 +92,7 @@ const Tab_WordCloud = ({ restId }) => {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Review List - {selectedWord}</DialogTitle>
         <DialogContent sx={{ width: 600, height: 600 }}>
-          <Tab_ReviewList restId={restId} label={selectedWord} />
+          <Tab_ReviewList restId={restId} label="3" finder={selectedWordFinder} />
         </DialogContent>
       </Dialog>
     </div>

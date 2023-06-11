@@ -2,7 +2,7 @@ import { REVIEW_TF } from '../../api/REVIEW_TF';
 import React, { useState } from 'react';
 import { Avatar, Grid, List, ListItem, ListItemText, CircularProgress, Skeleton } from '@mui/material';
 
-const Review = ({ review, writer, writeDay, visitCount, avatar, images, myPlace }) => {
+const Review = ({ review, writer, writeDay, visitCount, avatar, images, myPlace, finder }) => {
   const [imgLoading, setImgLoading] = useState(Array(images.length).fill(true));
   const [isHovered, setIsHovered] = useState(false);
 
@@ -31,6 +31,15 @@ const Review = ({ review, writer, writeDay, visitCount, avatar, images, myPlace 
     window.open(myPlace, '_blank');
   };
 
+  const highlightText = (text) => {
+    if (!finder || finder.length === 0) {
+      return text;
+    }
+
+    const regex = new RegExp(`(${finder.join('|')})`, 'gi');
+    return text.replace(regex, '<span style="background-color: yellow">$1</span>');
+  };
+
   return (
     <div>
       <Grid container spacing={2} alignItems="center">
@@ -43,7 +52,7 @@ const Review = ({ review, writer, writeDay, visitCount, avatar, images, myPlace 
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <p>{review}</p>
+        <p dangerouslySetInnerHTML={{ __html: highlightText(review) }} />
       </Grid>
       <div style={{ display: 'flex', overflowX: 'auto' }}>
         {images.map((image, index) => (
@@ -70,8 +79,8 @@ const Review = ({ review, writer, writeDay, visitCount, avatar, images, myPlace 
   );
 };
 
-const ReviewList = ({ restId, label }) => {
-  const { reviews, isLoading } = REVIEW_TF(restId, label);
+const ReviewList = ({ restId, label, finder }) => {
+  const { reviews, isLoading } = REVIEW_TF(restId);
 
   if (isLoading) {
     return <Skeleton variant="rectangular" width="100vh" height="auto" />;
@@ -81,15 +90,39 @@ const ReviewList = ({ restId, label }) => {
     return <p>No reviews found</p>;
   }
 
+  let filteredReviews = [];
+
+  if (finder) {
+    filteredReviews = reviews.filter(review => {
+      const found = finder.some(word => review.review.includes(word));
+      return found;
+    });
+  } else {
+    filteredReviews = reviews.filter(review => review.label === label);
+  }
+
+  if (filteredReviews.length === 0) {
+    return <p>No matching reviews found</p>;
+  }
+
   return (
     <List>
-      {reviews.map((review, index) => (
+      {filteredReviews.map((review, index) => (
         <ListItem divider key={index}>
           <ListItemText
             primary={
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Review review={review.review} writer={review.writer} writeDay={review.writeDay} visitCount={review.visitCount} avatar={review.avatar} images={review.imageURL || []} myPlace={review.myPlace} />
+                  <Review
+                    review={review.review}
+                    writer={review.writer}
+                    writeDay={review.writeDay}
+                    visitCount={review.visitCount}
+                    avatar={review.avatar}
+                    images={review.imageURL || []}
+                    myPlace={review.myPlace}
+                    finder={finder}
+                  />
                 </Grid>
               </Grid>
             }
@@ -101,27 +134,3 @@ const ReviewList = ({ restId, label }) => {
 };
 
 export default ReviewList;
-
-
-//     const [reviews, setReviews] = useState([]);
-
-//     useEffect(() => {
-//         const fetchReviews = async () => {
-//             try {
-//                 const response = await axios.get('http://localhost:8080/review', {
-//                     params: { rest_id: restId },
-//                 });
-//                 const filteredReviews = response.data.filter((review) => review.label === label);
-//                 setReviews(filteredReviews);
-//             } catch (error) {
-//                 console.error('Failed to fetch reviews', error);
-//             }
-//         };
-
-//         fetchReviews();
-//     }, [restId, label]);
-
-//     return reviews;
-// };
-
-// export default useReviews;
