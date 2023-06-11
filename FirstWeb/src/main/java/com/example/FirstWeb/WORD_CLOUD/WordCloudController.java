@@ -1,4 +1,4 @@
-package com.example.FirstWeb;
+package com.example.FirstWeb.WORD_CLOUD;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.http.HttpStatus;
