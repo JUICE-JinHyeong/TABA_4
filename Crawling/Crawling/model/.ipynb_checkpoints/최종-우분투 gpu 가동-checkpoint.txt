@@ -1,0 +1,157 @@
+window에서 nvidia driver 설치하고 올 것
+# 확인 방법  -  여기서 제시된 cuda 버전은 최신일 수록 좋은 듯 하다.(잘 모르지만 호환은 된다)
+nvidia-smi
+
+WLS2 우분투 설치 및 cuda cudnn 설치 #https://iambeginnerdeveloper.tistory.com/199
+
+cuda toolkit  11.8
+https://developer.nvidia.com/cuda-11-8-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=WSLuntu&target_version=2.0&target_type=deb_network
+cudnn 8.6
+https://developer.nvidia.com/rdp/cudnn-archive
+
+tensorflow 2.12.0 -> cuda 11.8 cudnn 8.6 # https://www.tensorflow.org/install/source?hl=ko#gpu
+
+
+
+cudnn 설치 관련
+$ tar -xvf cudnn-linux-x86_64-8.6.0.163_cuda11-archive.tar.xz
+$ cd cudnn-linux-x86_64-8.6.0.163_cuda11-archive
+$ sudo cp include/cudnn* /usr/local/cuda/include
+$ sudo cp lib/libcudnn* /usr/local/cuda/lib64
+$ sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
+
+sudo ln -sf /usr/local/cuda-11.8/targets/x86_64-linux/lib/libcudnn_adv_train.so.8.6.0 /usr/local/cuda-11.8/targets/x86_64-linux/lib/libcudnn_adv_train.so.8
+sudo ln -sf /usr/local/cuda-11.8/targets/x86_64-linux/lib/libcudnn_ops_infer.so.8.6.0  /usr/local/cuda-11.8/targets/x86_64-linux/lib/libcudnn_ops_infer.so.8
+sudo ln -sf /usr/local/cuda-11.8/targets/x86_64-linux/lib/libcudnn_cnn_train.so.8.6.0  /usr/local/cuda-11.8/targets/x86_64-linux/lib/libcudnn_cnn_train.so.8
+sudo ln -sf /usr/local/cuda-11.8/targets/x86_64-linux/lib/libcudnn_adv_infer.so.8.6.0  /usr/local/cuda-11.8/targets/x86_64-linux/lib/libcudnn_adv_infer.so.8
+sudo ln -sf /usr/local/cuda-11.8/targets/x86_64-linux/lib/libcudnn_ops_train.so.8.6.0  /usr/local/cuda-11.8/targets/x86_64-linux/lib/libcudnn_ops_train.so.8
+sudo ln -sf /usr/local/cuda-11.8/targets/x86_64-linux/lib/libcudnn_cnn_infer.so.8.6.0 /usr/local/cuda-11.8/targets/x86_64-linux/lib/libcudnn_cnn_infer.so.8
+sudo ln -sf /usr/local/cuda-11.8/targets/x86_64-linux/lib/libcudnn.so.8.6.0 /usr/local/cuda-11.8/targets/x86_64-linux/lib/libcudnn.so.8
+
+cuda 설치 확인
+nvcc -V
+
+cudnn 설치 확인
+cat /usr/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
+
+자바 설치
+sudo apt-get install openjdk-11-jdk
+
+환경변수
+export LD_LIBRARY_PATH="/usr/local/cuda-11.8/lib64:$LD_LIBRARY_PATH"
+
+export PATH=$PATH:"/usr/local/cuda/bin"
+export CUDADIR="/usr/local/cuda"
+
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+
+tensorflow 인식 확인 및 기타 라이브러리 설치
+sudo apt install pip
+pip install numpy
+pip install pandas
+pip install konlpy
+	JAVA_HOME 환경변수 인식하는지 확인
+	python3
+		from konlpy.tag import Okt
+		okt=Okt()
+pip install tensorflow
+	tensorflow gpu 인식 확인
+	python3
+		from tensorflow.python.client import device_lib
+		device_lib.list_local_devices()
+
+도커 설치(도커 설치 및 nvidia docker , nvidia toolkit만 참고)
+https://velog.io/@inthecode/Windows-10WSL%EC%97%90%EC%84%9C-Docker%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%98%EC%97%AC-Tensorflow-GPU%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0
+
+## sudo service docker run/restart/stop
+
+# nvidia/cuda/11.8(dev)
+docker pull nvidia/cuda:11.8.0-devel-ubuntu20.04
+
+triton github 다음은 예제 코드
+***주의 : 23.05 는 cuda 12.1을 사용하므로 tensowflow 2.12.0 이 요구하는 cuda 버전과 맞지 않다. 그렇기 때문에 22.12를 설치하도록 한다.
+# 버전 확인 : https://docs.nvidia.com/deeplearning/triton-inference-server/release-notes/index.html
+
+아래는 23.05 예제이므로 다를 수도 있다.
+임의로 22.12로 바꿨으나 안해봐서 결과를 모름
+
+git clone -b r22.12 https://github.com/triton-inference-server/server.git
+cd server/docs/examples
+./fetch_models.sh
+
+# Step 2: Launch triton from the NGC Triton container
+docker run --gpus=1 --rm --net=host -v ${PWD}/model_repository:/models nvcr.io/nvidia/tritonserver:23.05-py3 tritonserver --model-repository=/models
+
+# Step 3: Sending an Inference Request 
+# In a separate console, launch the image_client example from the NGC Triton SDK container
+docker run -it --rm --net=host nvcr.io/nvidia/tritonserver:22.12-py3-sdk
+/workspace/install/bin/image_client -m densenet_onnx -c 3 -s INCEPTION /workspace/images/mug.jpg
+
+# Inference should return the following
+Image '/workspace/images/mug.jpg':
+    15.346230 (504) = COFFEE MUG
+    13.224326 (968) = CUP
+    10.422965 (505) = COFFEEPOT
+
+
+
+
+# 추가 다중 cuda 사용시
+https://m31phy.tistory.com/125
+
+
+
+# 트리톤이 실행되었으면 python 라이브러리 환경 설정을 해준다. 물론 모델마다 라이브러리가 다를 경우 모델마다 가상환경이 필요할 것임 - trtion_python_backend_stub
+ps 당연하게도 난 이딴건 하지 않는다.
+
+cd ~ 에서 실행할 경우(model_repository가 비었을 경우) model이 담기지 않는다. {PWD}는 현재 위치
+model을 담고싶다면 model이 저장된 디렉토리를 마운트하도록하자.
+sudo docker run --gpus all --net=host -v /usr/lib/jvm:/media -v ${PWD}/model_repository:/models nvcr.io/nvidia/tritonserver:22.12-py3 tritonserver --model-repository=/models
+
+인퍼런스 서버가 실행되면 아래와 같이 나의 gpu를 찾은 것을 볼 수 있다
+I0612 20:32:06.549631 1 metrics.cc:864] Collecting metrics for GPU 0: NVIDIA GeForce GTX 1660 SUPER
+I0612 20:32:06.549808 1 metrics.cc:757] Collecting CPU metrics
+
+그럼 이제 컨테이너 내부 cmd에서 작업을 하도록 한다.
+새로운 우분투 창을 킨다
+
+nvidia-drive 확인
+nvidia-smi
+
+cuda 버전 확인
+nvcc -V
+cuda 버전이 11.8이어야 함.
+
+## python 라이브러리 설치 ##
+입력
+sudo docker exec -it container_name bash 
+cd /
+# java 설치를 대신해도 된다. 
+cp media /usr/lib/jvm
+vi ~/.bashrc
+	vi 접속 후 맨 아래에 코드 입력 
+	export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+
+pip install --upgrade pip # (23.1.2 사용)
+pip install numpy
+pip install pandas
+pip install konlpy # 0.6.0
+	konlpy가 JAVA_HOME을 사용하기 때문에 잘 돌아가는지 확인할 필요가 있다.
+	python3
+		from konlpy.tag import Okt
+		okt=Okt()
+pip install tensorflow==2.12.0
+	tensorflow gpu 인식 확인
+	python3
+		from tensorflow.python.client import device_lib
+		device_lib.list_local_devices()
+
+
+
+# config.pbtxt 작성법
+
+https://docs.nvidia.com/deeplearning/triton-inference-server/user-guide/docs/user_guide/model_configuration.html
+
+# triton server
+
+https://github.com/triton-inference-server

@@ -1,0 +1,49 @@
+
+docker pull nvidia/cuda:12.1.1-base-ubuntu20.04
+sudo docker run --gpus=1 --net=host --name test -v ${PWD}/model_repository:/models nvcr.io/nvidia/tritonserver:23.05-py3 triton
+server --model-repository=/models
+
+
+nvcr.io/nvidia/tritonserver:23.05-py3
+
+
+/usr/lib/jvm : /media
+/triton-modeldata/models/model_repository : /models
+
+
+cp -r media /usr/lib/jvm
+
+CMD 
+["tritonserver", "--model-repository=/models"]
+pip install --upgrade pip
+pip install numpy
+pip install pandas
+pip install konlpy
+pip install tensorflow
+
+cp /media /usr/lib/jvm
+
+
+# gedit ~/.bashrc
+
+export PATH=$PATH:/usr/local/cuda-11.8/bin
+
+
+# gpu 사용 가능 여부 확인
+
+from tensorflow.python.client import device_lib
+device_lib.list_local_devices()
+
+
+Welcome to Ubuntu 20.04.6 LTS (GNU/Linux 5.10.102.1-microsoft-standard-WSL2 x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Mon Jun 12 00:34:24 KST 2023
+
+  System load:  0.65                Processes:                29
+  Usage of /:   19.5% of 250.98GB   Users logged in:          0
+  Memory usage: 26%                 IPv4 address for docker0: 172.17.0.1
+  Swap usage:   0%                  IPv4 address for eth0:    172.19.18.100
