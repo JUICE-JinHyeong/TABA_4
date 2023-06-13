@@ -1,3 +1,4 @@
 {
-    "terminal.integrated.cwd": "D:\\이영민\\test3\\TABA_4\\FirstWeb\\src\\main\\reactfront"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.compile.nullAnalysis.mode": "automatic"
 }
