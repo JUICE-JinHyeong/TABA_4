@@ -21,22 +21,47 @@ const SearchBar = () => {
     };
 
 
-    const handleSearch = () => {
-      if (selectedOption && searchInput) {
-          if (showAlert) {
-              setShowAlert(false);
-          }
+  //   const handleSearch = () => {
+  //     if (selectedOption && searchInput) {
+  //         if (showAlert) {
+  //             setShowAlert(false);
+  //         }
   
         
-          navigate(`/middlePage?searchOption=${selectedOption}&searchInput=${searchInput}`);
-          axios.post('/api/input', { searchInput }, { headers: { 'Content-Type': 'application/json' }})
-          .then(response => {
-                  console.log(response);
-              })
-              .catch(error => console.error(error));
-      } else {
-          setShowAlert(true);
+  //         navigate(`/middlePage?searchOption=${selectedOption}&searchInput=${searchInput}`);
+  //         axios.post('https://localhost:8080/api/input', { searchInput }, { headers: { 'Content-Type': 'application/json' }})
+  //         .then(response => {
+  //                 console.log(response);
+  //             })
+  //             .catch(error => console.error(error));
+  //     } else {
+  //         setShowAlert(true);
+  //     }
+  // };
+  const handleSearch = () => {
+    if (selectedOption && searchInput) {
+      if (showAlert) {
+        setShowAlert(false);
       }
+  
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://localhost:8080/api/input');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            console.log(xhr.responseText);
+          } else {
+            console.error('요청 실패');
+          }
+        }
+      };
+      xhr.send(JSON.stringify({ searchInput }));
+  
+      navigate(`/middlePage?searchOption=${selectedOption}&searchInput=${searchInput}`);
+    } else {
+      setShowAlert(true);
+    }
   };
   
 
