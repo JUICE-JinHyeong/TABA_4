@@ -23,7 +23,7 @@ const Review = ({ review, writer, writeDay, visitCount, avatar, images, myPlace,
   };
 
   const getImageHeight = () => {
-    return isHovered ? '250px' : '150px';
+    return isHovered ? 'imageHeight' : 'imageHeight' ;
   };
 
   const handleAvatarClick = () => {
@@ -66,7 +66,8 @@ const Review = ({ review, writer, writeDay, visitCount, avatar, images, myPlace,
               src={image}
               alt={`review ${index}`}
               onLoad={() => handleImageLoad(index)}
-              style={{ height: getImageHeight(), width: 'auto', borderRadius: '5px' }}
+              style={{ height: getImageHeight(), maxHeight: '400px', width: 'auto', borderRadius: '5px' }}
+
             />
             {imgLoading[index] && <CircularProgress />}
           </div>

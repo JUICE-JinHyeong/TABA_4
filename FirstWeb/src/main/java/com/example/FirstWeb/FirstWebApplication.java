@@ -1,13 +1,1 @@
-package com.example.FirstWeb;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
-
-@SpringBootApplication
-public class FirstWebApplication {
-
-	public static void main(String[] args) {
-		ConfigurableApplicationContext context = SpringApplication.run(FirstWebApplication.class, args);
-
-	}
-}
+灡捫慧攠捯洮數慭灬攮䙩牳瑗敢㬍੩浰潲琠潲朮獰物湧晲慭敷潲欮扯潴⹓灲楮杁灰汩捡瑩潮㬍੩浰潲琠潲朮獰物湧晲慭敷潲欮扯潴⹡畴潣潮晩杵牥⹓灲楮杂潯瑁灰汩捡瑩潮㬍੩浰潲琠潲朮獰物湧晲慭敷潲欮捯湴數琮䍯湦楧畲慢汥䅰灬楣慴楯湃潮瑥硴㬍਍ੀ印物湧䉯潴䅰灬楣慴楯渍ੰ畢汩挠捬慳猠䙩牳瑗敢䅰灬楣慴楯渠笍਍ਉ灵扬楣⁳瑡瑩挠癯楤⁭慩渨却物湧孝⁡牧猩⁻ഊउ䍯湦楧畲慢汥䅰灬楣慴楯湃潮瑥硴⁣潮瑥硴‽⁓灲楮杁灰汩捡瑩潮⹲畮⡆楲獴坥扁灰汩捡瑩潮⹣污獳Ⱐ慲杳⤻ഊഊॽഊ納�

@@ -1,0 +1,35 @@
+.wordcloud-text {
+    font-family: 'NanumSquare', sans-serif;
+    font-weight: bold;
+  }
+  
+  .wordcloud-text:hover {
+    text-shadow: 2px 3px 5px rgba(0, 0, 0, 0.5);
+  }
+  
+  .logo {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .logo:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    background-color: rgb(243, 243, 243);
+    border-radius: 50%;
+    z-index: -1;
+  }
+  
+  .logo:hover:before {
+    width: 150%;
+    height: 130%;
+    left: -10px;
+    top: -3px;
+  }
+  
+  .store_title{
+    text-align: center;
+    font-size: 30px;
+  }

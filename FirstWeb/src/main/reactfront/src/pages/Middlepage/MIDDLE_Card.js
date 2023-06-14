@@ -11,6 +11,8 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Popover from '@mui/material/Popover';
+import './MIDDLE.css';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -25,66 +27,109 @@ const ExpandMore = styled((props) => {
 
 export default function Carddata({ data }) {
   const [expanded, setExpanded] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const handleExpandClick = (event) => {
+    setAnchorEl(event.currentTarget);
+    setExpanded((prev) => !prev);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   const navigate = useNavigate();
-  console.log(data.imageURL);
+
   const handleCardClick = () => {
     navigate(`/result`, { state: { data } });
-    //navigate(`/result?id=${data.id}&title=${data.title}&description=${data.description}&address=${data.opentime}&pn=${data.pn}`);
   };
 
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345, marginTop: 3, marginBottom: 2 }} className="card">
       <CardHeader
+        className="card-title"
         onClick={handleCardClick}
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
-        title={data.title}
+        title={data.title && data.title.length > 14 ? `${data.title.substring(0, 14)}...` : data.title}
+        titleTypographyProps={{ className: 'card-title' }}
       />
+
+      <CardContent sx={{ pb: 0 }} onClick={handleCardClick}>
+        <Typography variant="body2" color="text.secondary" className="custom-text">
+          {data.address && data.address.length > 50
+            ? `${data.address.substring(0, 50)}...`
+            : data.address}
+        </Typography>
+      </CardContent>
+
+      <CardActions disableSpacing sx={{ p: 0 }}>
+        <ExpandMore
+          expand={expanded}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </ExpandMore>
+      </CardActions>
       <CardMedia
         onClick={handleCardClick}
         component="img"
         height="194"
-        image={data.imageURL[0].replace(/'/g, '')} // Remove single quotes
+        image={data.imageURL && data.imageURL[0] ? data.imageURL[0].replace(/'/g, '') : process.env.PUBLIC_URL + '/NO_IMAGE_4.png'}
         alt="식당이미지"
       />
-      <CardContent onClick={handleCardClick}>
-        <Typography paragraph>상세주소: {data.address}</Typography>
-        <Typography paragraph>영업시간: {data.opentime}</Typography>
-        <Typography paragraph>전화번호: {data.pn}</Typography>
-      </CardContent>
-      {data.description && (
-        <CardActions disableSpacing>
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </ExpandMore>
-        </CardActions>
-      )}
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            {data.description && data.description.length > 50
-              ? expanded
-                ? data.description
-                : `${data.description.substring(0, 50)}...`
-              : data.description}
-          </Typography>
-        </CardContent>
-      </Collapse>
+
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        <Typography sx={{ p: 2 }} className="popover-content">
+          {
+            (!data.opentime && !data.pn && !data.description) ?
+              <Typography paragraph>
+                <span className="popup-text-data">식당 정보가 없습니다.</span>
+              </Typography> :
+              <>
+                {data.opentime &&
+                  <Typography paragraph>
+                    <span className="popup-text-title">· 영업시간 : </span>
+                    <span className="popup-text-data">{data.opentime}</span>
+                  </Typography>
+                }
+                {data.pn &&
+                  <Typography paragraph>
+                    <span className="popup-text-title">· 전화번호 : </span>
+                    <span className="popup-text-data">{data.pn}</span>
+                  </Typography>
+                }
+                {data.description &&
+                  <Typography paragraph>
+                    <span className="popup-text-title">· 상세정보 : </span>
+                    <span className="popup-text-data">{data.description}</span>
+                  </Typography>
+                }
+              </>
+          }
+            </Typography>
+      </Popover>
     </Card>
   );
 }
-
-

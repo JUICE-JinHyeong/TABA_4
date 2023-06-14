@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Select, MenuItem, TextField, InputLabel, FormControl, Box, IconButton, Alert, Modal } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import { SEARCH_INPUT } from '../api/SEARCH_INPUT';
+
 
 const SearchBar = () => {
     const navigate = useNavigate();
@@ -10,7 +11,7 @@ const SearchBar = () => {
     const [selectedOption, setSelectedOption] = useState('');
     const [showAlert, setShowAlert] = useState(false);
 
-    const options = ['식당', '지역', '음식'];
+    const options = ['식당', '음식'];
 
     const handleInputChange = (event) => {
         setSearchInput(event.target.value);
@@ -21,53 +22,25 @@ const SearchBar = () => {
     };
 
 
-  //   const handleSearch = () => {
-  //     if (selectedOption && searchInput) {
-  //         if (showAlert) {
-  //             setShowAlert(false);
-  //         }
-  
-        
-  //         navigate(`/middlePage?searchOption=${selectedOption}&searchInput=${searchInput}`);
-  //         axios.post('https://localhost:8080/api/input', { searchInput }, { headers: { 'Content-Type': 'application/json' }})
-  //         .then(response => {
-  //                 console.log(response);
-  //             })
-  //             .catch(error => console.error(error));
-  //     } else {
-  //         setShowAlert(true);
-  //     }
-  // };
-  const handleSearch = () => {
-    if (selectedOption && searchInput) {
-      if (showAlert) {
-        setShowAlert(false);
-      }
-  
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', 'https://localhost:8080/api/input');
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status === 200) {
-            console.log(xhr.responseText);
-          } else {
-            console.error('요청 실패');
-          }
+    const handleSearch = () => {
+        if (selectedOption && searchInput) {
+            if (showAlert) {
+                setShowAlert(false);
+            }
+            console.log(selectedOption)
+            console.log(searchInput)
+
+            navigate(`/middlePage?searchOption=${selectedOption}&searchInput=${searchInput}`);
+            SEARCH_INPUT(searchInput, selectedOption);  // 서버에 searchInput과 selectedOption을 보내는 코드
+        } else {
+            setShowAlert(true);
         }
-      };
-      xhr.send(JSON.stringify({ searchInput }));
-  
-      navigate(`/middlePage?searchOption=${selectedOption}&searchInput=${searchInput}`);
-    } else {
-      setShowAlert(true);
-    }
-  };
-  
+    };
+
 
     return (
         <Box display="flex" alignItems="center" gap={2}>
-            <FormControl variant="outlined" sx={{ minWidth: 300 }}>
+            <FormControl variant="outlined" sx={{ minWidth: 200 }}>
                 <InputLabel id="search-option-label">Search Option</InputLabel>
                 <Select
                     labelId="search-option-label"
@@ -119,7 +92,6 @@ const SearchBar = () => {
 };
 
 export default SearchBar;
-
 
 /*import React, { useState } from 'react';
 import { Select, MenuItem, TextField, InputLabel, FormControl, Box, IconButton, Alert, Modal } from '@mui/material';

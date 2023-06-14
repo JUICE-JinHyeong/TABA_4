@@ -24,6 +24,17 @@ export default function BasicTable({ data }) {
     <TableContainer component={Paper}>
       <Table sx={{ maxWidth: '100%' }} aria-label="simple table">
         <TableBody>
+
+          <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            <TableCell >상세주소: {data.address}</TableCell>
+          </TableRow>
+          <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            <TableCell component="th" scope="row">전화번호: {data.pn}</TableCell>
+          </TableRow>
+          <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            <TableCell> 영업시간: {data.opentime}</TableCell>
+          </TableRow>
+
           {data.description && (
             <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell>
@@ -39,20 +50,10 @@ export default function BasicTable({ data }) {
                   </IconButton>
                 )}
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
-                  {data.description}
                 </Collapse>
               </TableCell>
             </TableRow>
           )}
-          <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-            <TableCell component="th" scope="row">전화번호: {data.pn}</TableCell>
-          </TableRow>
-          <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-            <TableCell >상세주소: {data.address}</TableCell>
-          </TableRow>
-          <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-            <TableCell> 영업시간: {data.opentime}</TableCell>
-          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>

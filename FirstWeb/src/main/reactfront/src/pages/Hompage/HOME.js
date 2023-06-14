@@ -7,34 +7,51 @@ import SearchBar from '../SearchBar';
 import MiddlePage from '../Middlepage/MIDDLE';
 import ResultPage from '../Resultpage/RESULT';
 import RecentSearch from './HOME_RecentSearch';
+import './HOME.css';
 
 export default function App() {
-  
- 
+
+  const StyledApp = styled('div')(({ theme }) => ({
+    backgroundColor: theme.palette.grey[200],
+    width: '100%',
+    height: '3vh',
+  }));
+
+  const StyledText = styled('div')(({ theme }) => ({
+    color: 'black',
+    fontSize: '1.2rem',
+    fontWeight: 500,
+    textAlign: 'center',
+  }));
   const HomePage = () => (
-    <Box item sx={{ flexGrow: 1 }}>
-      <Grid container spacing={3}>
-        <Grid item xs={2} />
-        <Grid item xs={8}
-          container
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-          style={{ minHeight: '70vh' }}
-        >
-          <Grid item>
-            <h1>나리뷰</h1>
+    <StyledApp>
+      <StyledText>Review.restaurant</StyledText>
+      <Box item sx={{ flexGrow: 1 }}>
+        <Grid container spacing={3}>
+          <Grid item xs={2} />
+          <Grid item xs={8}
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            style={{ minHeight: '70vh' }}
+          >
+            <Grid item>
+
+              <img src="/logo_1.png" alt="Logo" />
+            </Grid>
+            <Grid item>
+              <SearchBar />
+            </Grid>
+            <Grid item>
+              <RecentSearch />
+              {/* <RecentSearch/> */}
+            </Grid>
           </Grid>
-          <Grid item>
-            <SearchBar />
-          </Grid>
-          <Grid item>
-            <RecentSearch/>
-          </Grid>
+          <Grid item xs={2} />
         </Grid>
-        <Grid item xs={2} />
-      </Grid>
-    </Box>
+      </Box>
+    </StyledApp>
   );
 
   return (

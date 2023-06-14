@@ -3,12 +3,24 @@ import React, { useEffect, useRef, useState } from 'react';
 import { select } from 'd3-selection';
 import cloud from 'd3-cloud';
 import { scaleLinear } from 'd3-scale';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 import Tab_ReviewList from './Tab_ReviewList';
 import { transition } from 'd3-transition';
 import Skeleton from '@mui/material/Skeleton';
 import { Button, Card, CardContent, Dialog, DialogContent, DialogTitle, Typography } from '@mui/material';
+import './RESULT.css';
+const getRandomColor = () => {
+  let color = '#';
+  let random;
+  for (let i = 0; i < 6; i++) {
+    if (i === 0) {
+      random = Math.floor(Math.random() * 6) + 6; // 6 to 11 (6,7,8,9,A,B), to avoid red colors
+    } else {
+      random = Math.floor(Math.random() * 16); // 0 to 15
+    }
+    color += random.toString(16).toUpperCase();
+  }
+  return color;
+};
 
 const Tab_WordCloud = ({ restId }) => {
   const svgRef = useRef();
@@ -24,10 +36,10 @@ const Tab_WordCloud = ({ restId }) => {
     if (!isLoading && wordcloud) {
       const wordCounts = wordcloud.map(item => item.count);
       const sizeScale = scaleLinear().domain([Math.min(...wordCounts), Math.max(...wordCounts)]).range([20, 100]);
-
+  
       cloud()
         .size([width, height])
-        .words(wordcloud.map(d => ({ text: d.word, size: sizeScale(d.count), finder: d.finder })))
+        .words(wordcloud.map(d => ({ text: d.word, size: sizeScale(d.count),finder: d.finder, color: getRandomColor() }))) 
         .rotate(0)
         .fontSize(d => d.size)
         .padding(10)
@@ -49,11 +61,14 @@ const Tab_WordCloud = ({ restId }) => {
             .text(d => d.text)
             .on('click', handleWordClick)
             .on('mouseover', handleMouseOver)
-            .on('mouseout', handleMouseOut);
+            .on('mouseout', handleMouseOut)
+            .classed('wordcloud-text', true)
+            .style('fill', d => d.color);
 
           function handleWordClick(event, d) {
             setSelectedWord(d.text);
             setSelectedWordFinder(d.finder);
+           
             setOpen(true);
           }
 
@@ -62,16 +77,16 @@ const Tab_WordCloud = ({ restId }) => {
               .attr('font-weight', 'bold')
               .transition()
               .duration(200)
-              .style('fill', 'darkblue');
-          }
+              .style('fill', 'red');  // Change this line
+            }
 
           function handleMouseOut(event, d) {
             select(this)
               .attr('font-weight', 'normal')
               .transition()
               .duration(200)
-              .style('fill', 'black');
-          }
+              .style('fill', d.color);  // Use the original color here
+            }
         })
         .start();
     }
@@ -91,20 +106,7 @@ const Tab_WordCloud = ({ restId }) => {
     <div>
       <svg ref={svgRef}></svg>
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth> {/* maxWidth와 fullWidth 속성 추가 */}
-        <DialogTitle>
-          Review List - {selectedWord}
-
-          <IconButton
-            style={{ position: "absolute", right: 20 }}  // 'right' 값을 조절하여 버튼의 위치를 변경합니다.
-            edge="end"
-            color="inherit"
-            onClick={handleClose}
-            aria-label="close"
-          >
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-
+        <DialogTitle>Review List - {selectedWord}</DialogTitle>
         <DialogContent>
           <Tab_ReviewList restId={restId} label="3" finder={selectedWordFinder} maxHeight="400px" /> {/* maxHeight 속성 추가 */}
         </DialogContent>

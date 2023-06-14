@@ -1,0 +1,35 @@
+/* RecentSearches.css */
+.container {
+    display: flex;
+    flex-direction: row;
+    font-size: 15px;
+    position: relative;
+    top: 100%;
+    left: 52%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .container h2 {
+    margin-right: 80px;
+    margin-top: 0;
+    font-size: 15px;
+    position: relative;
+    width: 100px;
+  }
+  
+  .container ol {
+    display: flex;
+    flex-direction: row;
+    list-style-type: decimal;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container .item {
+    margin-right: 10px;
+    width: 130px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
