@@ -1,13 +1,15 @@
-import { WordCloud } from '../../api/WORD_CLOUD';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { select } from 'd3-selection';
 import cloud from 'd3-cloud';
 import { scaleLinear } from 'd3-scale';
-import Tab_ReviewList from './Tab_ReviewList';
+import { Button, Dialog, DialogContent, DialogTitle, IconButton, Typography } from '@mui/material';
 import { transition } from 'd3-transition';
+import CloseIcon from '@mui/icons-material/Close';
+import Tab_ReviewList from './Tab_ReviewList';
 import Skeleton from '@mui/material/Skeleton';
-import { Button, Card, CardContent, Dialog, DialogContent, DialogTitle, Typography } from '@mui/material';
+import { WordCloud } from '../../api/WORD_CLOUD';
 import './RESULT.css';
+
 const getRandomColor = () => {
   let color = '#';
   let random;
@@ -34,16 +36,23 @@ const Tab_WordCloud = ({ restId }) => {
 
   useEffect(() => {
     if (!isLoading && wordcloud) {
-      const wordCounts = wordcloud.map(item => item.count);
+      const wordCounts = wordcloud.map((item) => item.count);
       const sizeScale = scaleLinear().domain([Math.min(...wordCounts), Math.max(...wordCounts)]).range([20, 100]);
-  
+
       cloud()
         .size([width, height])
-        .words(wordcloud.map(d => ({ text: d.word, size: sizeScale(d.count),finder: d.finder, color: getRandomColor() }))) 
+        .words(
+          wordcloud.map((d) => ({
+            text: d.word,
+            size: sizeScale(d.count),
+            finder: d.finder,
+            color: getRandomColor(),
+          }))
+        )
         .rotate(0)
-        .fontSize(d => d.size)
+        .fontSize((d) => d.size)
         .padding(10)
-        .on('end', words => {
+        .on('end', (words) => {
           const wordCloudSVG = select(svgRef.current)
             .attr('width', width)
             .attr('height', height)
@@ -55,20 +64,19 @@ const Tab_WordCloud = ({ restId }) => {
             .data(words)
             .enter()
             .append('text')
-            .style('font-size', d => `${d.size}px`)
+            .style('font-size', (d) => `${d.size}px`)
             .attr('text-anchor', 'middle')
-            .attr('transform', d => `translate(${d.x}, ${d.y}) rotate(${d.rotate})`)
-            .text(d => d.text)
+            .attr('transform', (d) => `translate(${d.x}, ${d.y}) rotate(${d.rotate})`)
+            .text((d) => d.text)
             .on('click', handleWordClick)
             .on('mouseover', handleMouseOver)
             .on('mouseout', handleMouseOut)
             .classed('wordcloud-text', true)
-            .style('fill', d => d.color);
+            .style('fill', (d) => d.color);
 
           function handleWordClick(event, d) {
             setSelectedWord(d.text);
             setSelectedWordFinder(d.finder);
-           
             setOpen(true);
           }
 
@@ -77,16 +85,16 @@ const Tab_WordCloud = ({ restId }) => {
               .attr('font-weight', 'bold')
               .transition()
               .duration(200)
-              .style('fill', 'red');  // Change this line
-            }
+              .style('fill', 'red'); // Change this line
+          }
 
           function handleMouseOut(event, d) {
             select(this)
               .attr('font-weight', 'normal')
               .transition()
               .duration(200)
-              .style('fill', d.color);  // Use the original color here
-            }
+              .style('fill', d.color); // Use the original color here
+          }
         })
         .start();
     }
@@ -105,10 +113,15 @@ const Tab_WordCloud = ({ restId }) => {
   return (
     <div>
       <svg ref={svgRef}></svg>
-      <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth> {/* maxWidth와 fullWidth 속성 추가 */}
-        <DialogTitle>Review List - {selectedWord}</DialogTitle>
+      <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
+        <DialogTitle>
+          Review List - {selectedWord}
+          <IconButton aria-label="close" onClick={handleClose} sx={{ position: 'absolute', right: 8, top: 8 }}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
         <DialogContent>
-          <Tab_ReviewList restId={restId} label="3" finder={selectedWordFinder} maxHeight="400px" /> {/* maxHeight 속성 추가 */}
+          <Tab_ReviewList restId={restId} label="3" finder={selectedWordFinder} maxHeight="400px" />
         </DialogContent>
       </Dialog>
     </div>

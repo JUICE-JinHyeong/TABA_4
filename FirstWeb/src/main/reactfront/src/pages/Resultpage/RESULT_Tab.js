@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Tab_WordCloud from './Tab_WordCloud';
 import Tab_ReviewList from './Tab_ReviewList';
+import Tab_Map from './Tab_Map';
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -55,6 +56,8 @@ export default function BasicTabs({ data }) {
                     <Tab label="부정" {...a11yProps(1)} />
                     <Tab label="중립" {...a11yProps(2)} />
                     <Tab label="긍정" {...a11yProps(3)} />
+                    <Tab label="지도" {...a11yProps(4)} />
+
 
                 </Tabs>
             </Box>
@@ -69,6 +72,9 @@ export default function BasicTabs({ data }) {
             </TabPanel>
             <TabPanel value={value} index={3}>
                 <Tab_ReviewList restId={data.id} label="0"  />
+            </TabPanel>
+            <TabPanel value={value} index={4}>
+                <Tab_Map address={data.address}  />
             </TabPanel>
 
 

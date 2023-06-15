@@ -20,13 +20,14 @@
     "react-d3-cloud": "^1.0.6",
     "react-dom": "^18.2.0",
     "react-horizontal-scrolling-menu": "^4.0.4",
+    "react-kakao-maps": "^0.0.13",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.11.2",
     "react-scripts": "^5.0.1",
     "react-tagcloud": "^2.3.1",
     "web-vitals": "^2.1.4"
   },
-  "proxy": "https://localhost:8080",
+  "proxy": "https://112.168.80.6:8080",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
