@@ -13,11 +13,12 @@ import java.util.List;
 @Repository
 public interface RecentSearchRepository extends JpaRepository<SearchInput, Long> {
 
-    @Query("SELECT si.searchInput, COUNT(si) FROM SearchInput si " +
+    @Query("SELECT si.searchInput, si.selectedOption, COUNT(si) FROM SearchInput si " +
             "WHERE si.date >= :startDate AND si.date <= :endDate " +
-            "GROUP BY si.searchInput " +
+            "GROUP BY si.searchInput, si.selectedOption " +
             "ORDER BY COUNT(si) DESC")
     List<Object[]> findTopSearchesInLastWeek(
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate);
+
 }

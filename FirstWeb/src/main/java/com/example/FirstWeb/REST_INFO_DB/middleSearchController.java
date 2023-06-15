@@ -20,23 +20,23 @@ public class middleSearchController {
 
     @GetMapping("/search") //
     public List<Map<String, Object>> search(
-            @RequestParam("searchOption") String searchOption,
+            @RequestParam("selectedOption") String selectedOption,
             @RequestParam("searchInput") String searchInput
     ) {
         String tableName;
         List<String> columnNames;
 
         // 검색 옵션에 따라 테이블명과 검색 대상 컬럼 설정
-        if (searchOption.equals("음식")) {
+        if (selectedOption.equals("음식")) {
             tableName = "REST_INFO";
             columnNames = new ArrayList<>();
             columnNames.add("BIG_TYPE");
             columnNames.add("KIND");
-        } else if (searchOption.equals("식당")) {
+        } else if (selectedOption.equals("식당")) {
             tableName = "REST_INFO";
             columnNames = new ArrayList<>();
             columnNames.add("REST_NAME");
-        } else if (searchOption.equals("지역")) {
+        } else if (selectedOption.equals("지역")) {
             tableName = "REST_INFO";
             columnNames = new ArrayList<>();
             columnNames.add("BOSS_ADDRESS");
@@ -56,9 +56,27 @@ public class middleSearchController {
         }
 
         // 쿼리 작성
-        StringBuilder sql = new StringBuilder("SELECT RI.IMAGE, RI.REST_NAME, RI.EXPLAIN, RI.BOSS_ADDRESS, RI.OPEN_HOUR, RI.NUM, RI.REST_ID, COUNT(RT.REST_ID) AS REVIEW_COUNT FROM " + tableName + " AS RI LEFT JOIN REVIEW_TF AS RT ON RI.REST_ID = RT.REST_ID WHERE ");
+//        StringBuilder sql = new StringBuilder("SELECT RI.IMAGE, RI.REST_NAME, RI.EXPLAIN, RI.BOSS_ADDRESS, RI.OPEN_HOUR, RI.NUM, RI.REST_ID, COUNT(RT.REST_ID) AS REVIEW_COUNT FROM " + tableName + " AS RI LEFT JOIN REVIEW_TF AS RT ON RI.REST_ID = RT.REST_ID WHERE ");
+//        List<Object> params = new ArrayList<>();
+//
+//
+//        for (int i = 0; i < columnNames.size(); i++) {
+//            String columnName = columnNames.get(i);
+//            sql.append(columnName).append(" LIKE ?");
+//            params.add("%" + searchInput + "%");
+//
+//            if (i < columnNames.size() - 1) {
+//                sql.append(" OR ");
+//            }
+//        }
+//        sql.append("GROUP BY RI.IMAGE, RI.REST_NAME, RI.EXPLAIN, RI.BOSS_ADDRESS, RI.OPEN_HOUR, RI.NUM, RI.REST_ID ORDER BY COUNT(RT.REST_ID) DESC");
+//
+//        // DB에서 데이터 조회
+//        List<Map<String, Object>> result = jdbcTemplate.queryForList(sql.toString(), params.toArray());
+//
+//        return result;
+        StringBuilder sql = new StringBuilder("SELECT * FROM " + tableName + " WHERE ");
         List<Object> params = new ArrayList<>();
-
 
         for (int i = 0; i < columnNames.size(); i++) {
             String columnName = columnNames.get(i);
@@ -69,7 +87,6 @@ public class middleSearchController {
                 sql.append(" OR ");
             }
         }
-        sql.append("GROUP BY RI.IMAGE, RI.REST_NAME, RI.EXPLAIN, RI.BOSS_ADDRESS, RI.OPEN_HOUR, RI.NUM, RI.REST_ID ORDER BY COUNT(RT.REST_ID) DESC");
 
         // DB에서 데이터 조회
         List<Map<String, Object>> result = jdbcTemplate.queryForList(sql.toString(), params.toArray());

@@ -5,7 +5,7 @@ export default function useFetchRecentSearches() {
   const [recentSearches, setRecentSearches] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/recent')
+    axios.get('/api/recent')
       .then(response => {
         console.log(response.data);  // <- Add this line
         setRecentSearches(response.data)

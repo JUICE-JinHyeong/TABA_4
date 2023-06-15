@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Select, MenuItem, TextField, InputLabel, FormControl, Box, IconButton, Alert, Modal } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from "react-router-dom";
-import { SEARCH_INPUT } from '../api/SEARCH_INPUT';
 
 
 const SearchBar = () => {
@@ -30,8 +29,7 @@ const SearchBar = () => {
             console.log(selectedOption)
             console.log(searchInput)
 
-            navigate(`/middlePage?searchOption=${selectedOption}&searchInput=${searchInput}`);
-            SEARCH_INPUT(searchInput, selectedOption);  // 서버에 searchInput과 selectedOption을 보내는 코드
+            navigate(`/middlePage?selectedOption=${selectedOption}&searchInput=${searchInput}`);
         } else {
             setShowAlert(true);
         }

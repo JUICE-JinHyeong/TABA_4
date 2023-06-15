@@ -4,9 +4,11 @@ import SearchBar from '../SearchBar';
 import CardComponent from './MIDDLE_Card';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import { searchFromDB } from '../../api/REST_INFO'; // or wherever you put the file
+import { REST_INFO } from '../../api/REST_INFO'; // or wherever you put the file
 import queryString from 'query-string'; // Query-string 패키지를 이용해서 URL에서 파라미터를 추출합니다.
 import './MIDDLE.css';
+import { SEARCH_INPUT } from '../../api/SEARCH_INPUT';
+
 
 const PaginationContainer = styled('div')({ // 페이지네이션 기능
     display: 'flex',
@@ -24,7 +26,7 @@ export default function MiddlePage() {
     };
     //
     const location = useLocation();
-    const { searchOption, searchInput } = queryString.parse(location.search);
+    const { selectedOption, searchInput } = queryString.parse(location.search);
     const navigate = useNavigate();
     const handleLogoClick = () => { // 로고 클릭시 홈페이지로 이동
         navigate('/');
@@ -32,18 +34,23 @@ export default function MiddlePage() {
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const data = await searchFromDB(searchOption, searchInput);
-                setCardsData(data || []);
-            } catch (error) {
-                console.error(error);
+          try {
+            const data = await REST_INFO(selectedOption, searchInput);
+            if (data && data.length > 0) {
+              setCardsData(data);
+              SEARCH_INPUT(searchInput, selectedOption);
             }
+          } catch (error) {
+            console.error(error);
+          }
         };
-
+      
         fetchData();
-    }, [searchOption, searchInput]);
+      }, [selectedOption, searchInput]);
+      
 
     const totalCards = cardsData.length;
+
 
     const renderCards = () => {
         if (!cardsData || cardsData.length === 0) {
@@ -63,6 +70,8 @@ export default function MiddlePage() {
                 </Grid >
             );
         }
+
+
 
         const startIndex = (currentPage - 1) * cardsPerPage;
         const endIndex = startIndex + cardsPerPage;

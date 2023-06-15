@@ -31,7 +31,7 @@ export const REVIEW_TF = (restId) => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/review', {
+        const response = await axios.get('/review', {
           params: {
             rest_id: restId
           },

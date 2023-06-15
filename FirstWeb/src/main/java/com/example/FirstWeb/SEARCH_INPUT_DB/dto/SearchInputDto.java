@@ -6,4 +6,6 @@ import lombok.Setter;
 @Setter
 public class SearchInputDto {
     private String searchInput;
+    private String selectedOption;
+
 }

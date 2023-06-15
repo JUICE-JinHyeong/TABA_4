@@ -18,6 +18,6 @@ public class SearchInputController {
     @CrossOrigin(origins = "*") // CORS 설정
     @PostMapping
     public SearchInput saveSearchInput(@RequestBody SearchInputDto searchInputDto) {
-        return searchInputService.saveSearchInput(searchInputDto.getSearchInput());
+        return searchInputService.saveSearchInput(searchInputDto);
     }
 }

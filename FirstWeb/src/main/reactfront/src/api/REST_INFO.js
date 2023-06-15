@@ -19,22 +19,21 @@ const transformDataForCardComponent = (data) => {
     };
 };
 
-export const searchFromDB = async (searchOption, searchInput) => {
+export const REST_INFO = async (selectedOption, searchInput) => {
     try {
-        if (!searchOption || !searchInput) {
+        if (!selectedOption || !searchInput) {
             return []; // searchOption 또는 searchInput이 없는 경우 빈 배열 반환
         }
 
-        const response = await axios.get('http://localhost:8080/search', {
+        const response = await axios.get('/search', {
             params: {
-                searchOption: searchOption,
+                selectedOption: selectedOption,
                 searchInput: searchInput,
             },
         });
 
         // 데이터 변환
         console.log(response.data); // 응답 데이터 확인
-        
         const transformedData = response.data.map(transformDataForCardComponent).filter(Boolean);
 
         // 상위 30개만 선택
@@ -44,7 +43,7 @@ export const searchFromDB = async (searchOption, searchInput) => {
 
     } catch (error) {
         console.error('Failed to fetch data from DB:', error);
-        return []; // 에러 발생 시 빈 배열 반환
+        return false; // 에러 발생 시 빈 배열 반환
     }
 };
 

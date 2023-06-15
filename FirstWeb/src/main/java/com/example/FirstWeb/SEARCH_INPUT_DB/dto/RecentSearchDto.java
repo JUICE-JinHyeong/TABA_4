@@ -9,5 +9,6 @@ import lombok.*;
 @Builder
 public class RecentSearchDto {
     private String searchInput;
+    private String selectedOption;
     private long searchCount;
 }

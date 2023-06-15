@@ -27,20 +27,19 @@ public class RecentSearchService {
 
         // 상위 10개 결과만 추출
         List<Object[]> topSearchResults = searchResults.stream()
-                .sorted((a, b) -> ((Long) b[1]).compareTo((Long) a[1])) // 검색 횟수를 기준으로 내림차순 정렬
+                .sorted((a, b) -> ((Long) b[2]).compareTo((Long) a[2])) // 검색 횟수를 기준으로 내림차순 정렬
                 .limit(10) // 상위 10개만 추출
                 .collect(Collectors.toList());
 
         List<RecentSearchDto> recentSearchDtos = new ArrayList<>();
         for (Object[] result : topSearchResults) {
             String searchInput = (String) result[0];
-            Long searchCount = (Long) result[1];
-            RecentSearchDto recentSearchDto = new RecentSearchDto(searchInput, searchCount);
+            String selectedOption = (String) result[1];
+            Long searchCount = (Long) result[2];
+            RecentSearchDto recentSearchDto = new RecentSearchDto(searchInput, selectedOption, searchCount);
             recentSearchDtos.add(recentSearchDto);
         }
 
         return recentSearchDtos;
     }
-
-
 }

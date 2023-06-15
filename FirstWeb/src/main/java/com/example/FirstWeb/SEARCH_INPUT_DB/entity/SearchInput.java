@@ -22,6 +22,9 @@ public class SearchInput {
     @Column(name = "SEARCHINPUT")
     private String searchInput;
 
+    @Column(name = "SELECTEDOPTION")
+    private String selectedOption;
+
     @Column(name = "DATE_")
     private LocalDate date;
 }
