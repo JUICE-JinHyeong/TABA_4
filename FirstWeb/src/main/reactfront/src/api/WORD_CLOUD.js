@@ -23,7 +23,7 @@ export const WordCloud = ({ restId }) => {
         const fetchData = async () => {
             try {
                 const result = await axios.get(
-                    '/wordcloud',
+                    'api/wordcloud',
                     { params: { rest_id: restId } }
                 );
 

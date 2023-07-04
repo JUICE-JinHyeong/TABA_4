@@ -2,5 +2,5 @@
   "dependencies": {
     "react-router-dom": "^6.11.2"
   },
-  "proxy": "https://112.168.80.6:8080"
+  "proxy": "http://localhost:8080"
 }

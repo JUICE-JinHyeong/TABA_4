@@ -10,7 +10,6 @@ import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Popover from '@mui/material/Popover';
 import './MIDDLE.css';
 
@@ -52,11 +51,6 @@ export default function Carddata({ data }) {
       <CardHeader
         className="card-title"
         onClick={handleCardClick}
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
         title={data.title && data.title.length > 14 ? `${data.title.substring(0, 14)}...` : data.title}
         titleTypographyProps={{ className: 'card-title' }}
       />
@@ -128,7 +122,7 @@ export default function Carddata({ data }) {
                 }
               </>
           }
-            </Typography>
+        </Typography>
       </Popover>
     </Card>
   );

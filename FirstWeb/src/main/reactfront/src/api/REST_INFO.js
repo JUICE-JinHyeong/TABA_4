@@ -25,7 +25,7 @@ export const REST_INFO = async (selectedOption, searchInput) => {
             return []; // searchOption 또는 searchInput이 없는 경우 빈 배열 반환
         }
 
-        const response = await axios.get('/search', {
+        const response = await axios.get('api/search', {
             params: {
                 selectedOption: selectedOption,
                 searchInput: searchInput,

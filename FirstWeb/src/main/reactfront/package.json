@@ -17,6 +17,7 @@
     "http-proxy-middleware": "^2.0.6",
     "query-string": "^8.1.0",
     "react": "^18.2.0",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-d3-cloud": "^1.0.6",
     "react-dom": "^18.2.0",
     "react-horizontal-scrolling-menu": "^4.0.4",
@@ -27,7 +28,7 @@
     "react-tagcloud": "^2.3.1",
     "web-vitals": "^2.1.4"
   },
-  "proxy": "https://112.168.80.6:8080",
+  "proxy": "http://localhost:8080",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

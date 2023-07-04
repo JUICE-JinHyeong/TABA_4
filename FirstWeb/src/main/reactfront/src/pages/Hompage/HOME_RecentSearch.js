@@ -20,7 +20,7 @@ export default function RecentSearch() {
               className="item"
               onClick={() => handleSearchItemClick(search.searchInput,search.selectedOption)}
             >
-              <strong className="cursor logo">{search.searchInput}</strong>
+              <strong className="cursor logo">{index+1}. {search.searchInput}</strong>
           </li>
         ))}
       </ol>

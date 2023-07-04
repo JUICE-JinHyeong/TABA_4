@@ -18,7 +18,7 @@ public class middleSearchController {
 
     @CrossOrigin(origins = "*") // CORS 설정
 
-    @GetMapping("/search") //
+    @GetMapping("/api/search") //
     public List<Map<String, Object>> search(
             @RequestParam("selectedOption") String selectedOption,
             @RequestParam("searchInput") String searchInput
@@ -31,6 +31,7 @@ public class middleSearchController {
             tableName = "REST_INFO";
             columnNames = new ArrayList<>();
             columnNames.add("BIG_TYPE");
+            columnNames.add("MENU"); //
             columnNames.add("KIND");
         } else if (selectedOption.equals("식당")) {
             tableName = "REST_INFO";
@@ -55,7 +56,6 @@ public class middleSearchController {
             return new ArrayList<>(); // 예외 처리 등을 위해 빈 리스트 반환
         }
 
-        // 쿼리 작성
 //        StringBuilder sql = new StringBuilder("SELECT RI.IMAGE, RI.REST_NAME, RI.EXPLAIN, RI.BOSS_ADDRESS, RI.OPEN_HOUR, RI.NUM, RI.REST_ID, COUNT(RT.REST_ID) AS REVIEW_COUNT FROM " + tableName + " AS RI LEFT JOIN REVIEW_TF AS RT ON RI.REST_ID = RT.REST_ID WHERE ");
 //        List<Object> params = new ArrayList<>();
 //

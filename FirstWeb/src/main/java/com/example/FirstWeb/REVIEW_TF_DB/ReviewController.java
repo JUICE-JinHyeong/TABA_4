@@ -18,7 +18,7 @@ public class ReviewController {
     private JdbcTemplate jdbcTemplate;
 
     @CrossOrigin
-    @GetMapping("/review")
+    @GetMapping("/api/review")
     public List<Map<String, Object>> getReviewsByRestId(@RequestParam("rest_id") String restId) {
         String sql = "SELECT * FROM REVIEW_TF WHERE REST_ID = ?";
         List<Map<String, Object>> reviews = jdbcTemplate.queryForList(sql, restId);

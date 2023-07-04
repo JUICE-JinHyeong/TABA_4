@@ -31,7 +31,7 @@ export const REVIEW_TF = (restId) => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get('/review', {
+        const response = await axios.get('api/review', {
           params: {
             rest_id: restId
           },
